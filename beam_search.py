@@ -114,7 +114,7 @@ def run_beam_search(sess, model, vocab, batch):
     latest_tokens = [t if t in xrange(vocab.size()) else vocab.word2id(data.UNKNOWN_TOKEN) for t in latest_tokens] # change any in-article temporary OOV ids to [UNK] id, so that we can lookup word embeddings
     states = [h.state for h in hyps] # list of current decoder states of the hypotheses
     prev_coverage = [h.coverage for h in hyps] # list of coverage vectors (or None)
-
+    prev_q_coverage = [h.q_coverage for h in hyps]
     # Run one step of the decoder to get the new info
     (topk_ids, topk_log_probs, new_states, attn_dists, p_gens, new_coverage, new_q_coverage) = model.decode_onestep(sess=sess,
                         batch=batch,
