@@ -441,6 +441,7 @@ class SummarizationModel(object):
 				self._enc_states: enc_states,
 				self._que_states: que_states,
 				self._enc_padding_mask: batch.enc_padding_mask,
+				self._que_padding_mask: batch.que_padding_mask,
 				self._dec_in_state: new_dec_in_state,
 				self._dec_batch: np.transpose(np.array([latest_tokens])),
 		}
