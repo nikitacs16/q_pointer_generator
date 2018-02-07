@@ -1,0 +1,496 @@
+INFO:tensorflow:Starting seq2seq_attention in train mode...
+INFO:tensorflow:Building graph...
+INFO:tensorflow:Adding attention_decoder timestep 0 of 100
+INFO:tensorflow:Adding attention_decoder timestep 1 of 100
+INFO:tensorflow:Adding attention_decoder timestep 2 of 100
+INFO:tensorflow:Adding attention_decoder timestep 3 of 100
+INFO:tensorflow:Adding attention_decoder timestep 4 of 100
+INFO:tensorflow:Adding attention_decoder timestep 5 of 100
+INFO:tensorflow:Adding attention_decoder timestep 6 of 100
+INFO:tensorflow:Adding attention_decoder timestep 7 of 100
+INFO:tensorflow:Adding attention_decoder timestep 8 of 100
+INFO:tensorflow:Adding attention_decoder timestep 9 of 100
+INFO:tensorflow:Adding attention_decoder timestep 10 of 100
+INFO:tensorflow:Adding attention_decoder timestep 11 of 100
+INFO:tensorflow:Adding attention_decoder timestep 12 of 100
+INFO:tensorflow:Adding attention_decoder timestep 13 of 100
+INFO:tensorflow:Adding attention_decoder timestep 14 of 100
+INFO:tensorflow:Adding attention_decoder timestep 15 of 100
+INFO:tensorflow:Adding attention_decoder timestep 16 of 100
+INFO:tensorflow:Adding attention_decoder timestep 17 of 100
+INFO:tensorflow:Adding attention_decoder timestep 18 of 100
+INFO:tensorflow:Adding attention_decoder timestep 19 of 100
+INFO:tensorflow:Adding attention_decoder timestep 20 of 100
+INFO:tensorflow:Adding attention_decoder timestep 21 of 100
+INFO:tensorflow:Adding attention_decoder timestep 22 of 100
+INFO:tensorflow:Adding attention_decoder timestep 23 of 100
+INFO:tensorflow:Adding attention_decoder timestep 24 of 100
+INFO:tensorflow:Adding attention_decoder timestep 25 of 100
+INFO:tensorflow:Adding attention_decoder timestep 26 of 100
+INFO:tensorflow:Adding attention_decoder timestep 27 of 100
+INFO:tensorflow:Adding attention_decoder timestep 28 of 100
+INFO:tensorflow:Adding attention_decoder timestep 29 of 100
+INFO:tensorflow:Adding attention_decoder timestep 30 of 100
+INFO:tensorflow:Adding attention_decoder timestep 31 of 100
+INFO:tensorflow:Adding attention_decoder timestep 32 of 100
+INFO:tensorflow:Adding attention_decoder timestep 33 of 100
+INFO:tensorflow:Adding attention_decoder timestep 34 of 100
+INFO:tensorflow:Adding attention_decoder timestep 35 of 100
+INFO:tensorflow:Adding attention_decoder timestep 36 of 100
+INFO:tensorflow:Adding attention_decoder timestep 37 of 100
+INFO:tensorflow:Adding attention_decoder timestep 38 of 100
+INFO:tensorflow:Adding attention_decoder timestep 39 of 100
+INFO:tensorflow:Adding attention_decoder timestep 40 of 100
+INFO:tensorflow:Adding attention_decoder timestep 41 of 100
+INFO:tensorflow:Adding attention_decoder timestep 42 of 100
+INFO:tensorflow:Adding attention_decoder timestep 43 of 100
+INFO:tensorflow:Adding attention_decoder timestep 44 of 100
+INFO:tensorflow:Adding attention_decoder timestep 45 of 100
+INFO:tensorflow:Adding attention_decoder timestep 46 of 100
+INFO:tensorflow:Adding attention_decoder timestep 47 of 100
+INFO:tensorflow:Adding attention_decoder timestep 48 of 100
+INFO:tensorflow:Adding attention_decoder timestep 49 of 100
+INFO:tensorflow:Adding attention_decoder timestep 50 of 100
+INFO:tensorflow:Adding attention_decoder timestep 51 of 100
+INFO:tensorflow:Adding attention_decoder timestep 52 of 100
+INFO:tensorflow:Adding attention_decoder timestep 53 of 100
+INFO:tensorflow:Adding attention_decoder timestep 54 of 100
+INFO:tensorflow:Adding attention_decoder timestep 55 of 100
+INFO:tensorflow:Adding attention_decoder timestep 56 of 100
+INFO:tensorflow:Adding attention_decoder timestep 57 of 100
+INFO:tensorflow:Adding attention_decoder timestep 58 of 100
+INFO:tensorflow:Adding attention_decoder timestep 59 of 100
+INFO:tensorflow:Adding attention_decoder timestep 60 of 100
+INFO:tensorflow:Adding attention_decoder timestep 61 of 100
+INFO:tensorflow:Adding attention_decoder timestep 62 of 100
+INFO:tensorflow:Adding attention_decoder timestep 63 of 100
+INFO:tensorflow:Adding attention_decoder timestep 64 of 100
+INFO:tensorflow:Adding attention_decoder timestep 65 of 100
+INFO:tensorflow:Adding attention_decoder timestep 66 of 100
+INFO:tensorflow:Adding attention_decoder timestep 67 of 100
+INFO:tensorflow:Adding attention_decoder timestep 68 of 100
+INFO:tensorflow:Adding attention_decoder timestep 69 of 100
+INFO:tensorflow:Adding attention_decoder timestep 70 of 100
+INFO:tensorflow:Adding attention_decoder timestep 71 of 100
+INFO:tensorflow:Adding attention_decoder timestep 72 of 100
+INFO:tensorflow:Adding attention_decoder timestep 73 of 100
+INFO:tensorflow:Adding attention_decoder timestep 74 of 100
+INFO:tensorflow:Adding attention_decoder timestep 75 of 100
+INFO:tensorflow:Adding attention_decoder timestep 76 of 100
+INFO:tensorflow:Adding attention_decoder timestep 77 of 100
+INFO:tensorflow:Adding attention_decoder timestep 78 of 100
+INFO:tensorflow:Adding attention_decoder timestep 79 of 100
+INFO:tensorflow:Adding attention_decoder timestep 80 of 100
+INFO:tensorflow:Adding attention_decoder timestep 81 of 100
+INFO:tensorflow:Adding attention_decoder timestep 82 of 100
+INFO:tensorflow:Adding attention_decoder timestep 83 of 100
+INFO:tensorflow:Adding attention_decoder timestep 84 of 100
+INFO:tensorflow:Adding attention_decoder timestep 85 of 100
+INFO:tensorflow:Adding attention_decoder timestep 86 of 100
+INFO:tensorflow:Adding attention_decoder timestep 87 of 100
+INFO:tensorflow:Adding attention_decoder timestep 88 of 100
+INFO:tensorflow:Adding attention_decoder timestep 89 of 100
+INFO:tensorflow:Adding attention_decoder timestep 90 of 100
+INFO:tensorflow:Adding attention_decoder timestep 91 of 100
+INFO:tensorflow:Adding attention_decoder timestep 92 of 100
+INFO:tensorflow:Adding attention_decoder timestep 93 of 100
+INFO:tensorflow:Adding attention_decoder timestep 94 of 100
+INFO:tensorflow:Adding attention_decoder timestep 95 of 100
+INFO:tensorflow:Adding attention_decoder timestep 96 of 100
+INFO:tensorflow:Adding attention_decoder timestep 97 of 100
+INFO:tensorflow:Adding attention_decoder timestep 98 of 100
+INFO:tensorflow:Adding attention_decoder timestep 99 of 100
+INFO:tensorflow:Time to build graph: 41 seconds
+INFO:tensorflow:Preparing or waiting for session...
+2018-02-07 08:24:05.221598: I tensorflow/core/platform/cpu_feature_guard.cc:137] Your CPU supports instructions that this TensorFlow binary was not compiled to use: SSE4.1 SSE4.2 AVX AVX2 FMA
+2018-02-07 08:24:07.778239: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1030] Found device 0 with properties: 
+name: Tesla K80 major: 3 minor: 7 memoryClockRate(GHz): 0.8235
+pciBusID: 0000:04:00.0
+totalMemory: 11.17GiB freeMemory: 11.11GiB
+2018-02-07 08:24:07.778279: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1120] Creating TensorFlow device (/device:GPU:0) -> (device: 0, name: Tesla K80, pci bus id: 0000:04:00.0, compute capability: 3.7)
+INFO:tensorflow:Restoring parameters from /scratch/scratch1/nikita/pg/myexperiment/train/model.ckpt-0
+INFO:tensorflow:Starting standard services.
+INFO:tensorflow:Starting queue runners.
+INFO:tensorflow:Created session.
+INFO:tensorflow:starting run_training
+INFO:tensorflow:running training step...
+INFO:tensorflow:Saving checkpoint to path /scratch/scratch1/nikita/pg/myexperiment/train/model.ckpt
+INFO:tensorflow:global_step/sec: 0
+2018-02-07 08:24:36.923326: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.923339: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.923391: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.923460: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.923498: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.923547: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.923559: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.923593: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.923639: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.923667: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.923711: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.923735: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.923674: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.923691: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.923823: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.923722: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.923883: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.923764: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.923791: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.923813: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.923825: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.923649: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.923830: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.923860: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.923886: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.923625: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.924210: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.923942: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.924270: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.923962: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.924047: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.924067: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.924118: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.924411: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.924431: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.924459: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.924471: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.924494: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.923962: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.924336: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.924563: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.924198: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.924616: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.924632: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.924653: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.924222: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.924482: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.924756: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.924280: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.924552: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.924339: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.924869: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.924211: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.924954: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.924465: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.925014: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.924688: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.924698: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.925100: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.924788: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.925158: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.925169: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.924861: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.924617: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.925235: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.925251: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.925042: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.925297: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.925309: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.925150: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.924843: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.924844: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.925230: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.924991: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.923919: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.925261: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.925533: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.925048: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.925313: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.924484: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.925343: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.925673: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.925349: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.925439: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.925456: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.925544: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.925547: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.925298: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.925584: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.925876: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.925617: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.925926: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.925700: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.925967: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.925728: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.925731: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.926060: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.925798: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.926143: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.926164: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.925913: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.925914: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.925699: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.925973: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.926302: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.926010: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.926041: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.925733: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.925826: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.926168: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.925583: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.926173: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.926227: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.926228: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.926650: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.926668: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.926312: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.926342: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.926501: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.926511: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.926542: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.926647: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.925727: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.926734: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.926934: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.926796: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.926924: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.926756: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.926976: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.927096: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.927112: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.927170: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.927250: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.927251: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.927296: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.927423: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.927450: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.927486: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.927577: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.927603: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.927647: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.927712: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.927737: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.927770: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.927874: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.927876: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.927924: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.928015: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.928015: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.928050: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.928165: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.928196: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.928230: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.928362: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.928365: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+2018-02-07 08:24:36.928416: W tensorflow/core/framework/op_kernel.cc:1192] Invalid argument: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+Finished constructing vocabulary of 20004 total words. Last word added: findings
+creating model...
+Writing word embedding metadata file to /scratch/scratch1/nikita/pg/myexperiment/train/vocab_metadata.tsv...
+Traceback (most recent call last):
+  File "run_summarization.py", line 325, in <module>
+    tf.app.run()
+  File "/tools/anaconda3/envs/py27/lib/python2.7/site-packages/tensorflow/python/platform/app.py", line 48, in run
+    _sys.exit(main(_sys.argv[:1] + flags_passthrough))
+  File "run_summarization.py", line 311, in main
+    setup_training(model, batcher)
+  File "run_summarization.py", line 179, in setup_training
+    run_training(model, batcher, sess_context_manager, sv, summary_writer) # this is an infinite loop until interrupted
+  File "run_summarization.py", line 197, in run_training
+    results = model.run_train_step(sess, batch)
+  File "/storage/home/nikita/d_pointer_generator/model.py", line 373, in run_train_step
+    return sess.run(to_return, feed_dict)
+  File "/tools/anaconda3/envs/py27/lib/python2.7/site-packages/tensorflow/python/client/session.py", line 889, in run
+    run_metadata_ptr)
+  File "/tools/anaconda3/envs/py27/lib/python2.7/site-packages/tensorflow/python/client/session.py", line 1120, in _run
+    feed_dict_tensor, options, run_metadata)
+  File "/tools/anaconda3/envs/py27/lib/python2.7/site-packages/tensorflow/python/client/session.py", line 1317, in _do_run
+    options, run_metadata)
+  File "/tools/anaconda3/envs/py27/lib/python2.7/site-packages/tensorflow/python/client/session.py", line 1336, in _do_call
+    raise type(e)(node_def, op, message)
+tensorflow.python.framework.errors_impl.InvalidArgumentError: Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+	 [[Node: seq2seq/loss/Mean/_2105 = _Recv[client_terminated=false, recv_device="/job:localhost/replica:0/task:0/device:CPU:0", send_device="/job:localhost/replica:0/task:0/device:GPU:0", send_device_incarnation=1, tensor_name="edge_33012_seq2seq/loss/Mean", tensor_type=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:CPU:0"]()]]
+
+Caused by op u'seq2seq/decoder/attention_decoder/Attention/mul_1', defined at:
+  File "run_summarization.py", line 325, in <module>
+    tf.app.run()
+  File "/tools/anaconda3/envs/py27/lib/python2.7/site-packages/tensorflow/python/platform/app.py", line 48, in run
+    _sys.exit(main(_sys.argv[:1] + flags_passthrough))
+  File "run_summarization.py", line 311, in main
+    setup_training(model, batcher)
+  File "run_summarization.py", line 159, in setup_training
+    model.build_graph() # build the graph
+  File "/storage/home/nikita/d_pointer_generator/model.py", line 354, in build_graph
+    self._add_seq2seq()
+  File "/storage/home/nikita/d_pointer_generator/model.py", line 265, in _add_seq2seq
+    decoder_outputs, self._dec_out_state, self.attn_dists, self.p_gens, self.coverage = self._add_decoder(emb_dec_inputs)
+  File "/storage/home/nikita/d_pointer_generator/model.py", line 174, in _add_decoder
+    outputs, out_state, attn_dists, p_gens, coverage = attention_decoder(inputs, self._dec_in_state, self._enc_states, self._enc_padding_mask, self._que_states, self._que_padding_mask, cell, initial_state_attention=(hps.mode=="decode"), pointer_gen=hps.pointer_gen, use_coverage=hps.coverage, prev_coverage=prev_coverage)
+  File "/storage/home/nikita/d_pointer_generator/attention_decoder.py", line 180, in attention_decoder
+    context_vector, attn_dist, coverage = attention(state, coverage)
+  File "/storage/home/nikita/d_pointer_generator/attention_decoder.py", line 140, in attention
+    attn_dist = masked_attention(e)
+  File "/storage/home/nikita/d_pointer_generator/attention_decoder.py", line 117, in masked_attention
+    attn_dist *= enc_padding_mask # apply mask
+  File "/tools/anaconda3/envs/py27/lib/python2.7/site-packages/tensorflow/python/ops/math_ops.py", line 894, in binary_op_wrapper
+    return func(x, y, name=name)
+  File "/tools/anaconda3/envs/py27/lib/python2.7/site-packages/tensorflow/python/ops/math_ops.py", line 1117, in _mul_dispatch
+    return gen_math_ops._mul(x, y, name=name)
+  File "/tools/anaconda3/envs/py27/lib/python2.7/site-packages/tensorflow/python/ops/gen_math_ops.py", line 2726, in _mul
+    "Mul", x=x, y=y, name=name)
+  File "/tools/anaconda3/envs/py27/lib/python2.7/site-packages/tensorflow/python/framework/op_def_library.py", line 787, in _apply_op_helper
+    op_def=op_def)
+  File "/tools/anaconda3/envs/py27/lib/python2.7/site-packages/tensorflow/python/framework/ops.py", line 2956, in create_op
+    op_def=op_def)
+  File "/tools/anaconda3/envs/py27/lib/python2.7/site-packages/tensorflow/python/framework/ops.py", line 1470, in __init__
+    self._traceback = self._graph._extract_stack()  # pylint: disable=protected-access
+
+InvalidArgumentError (see above for traceback): Incompatible shapes: [16,97] vs. [16,48]
+	 [[Node: seq2seq/decoder/attention_decoder/Attention/mul_1 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](seq2seq/decoder/attention_decoder/Attention/Softmax, _arg_enc_padding_mask_0_5/_475)]]
+	 [[Node: seq2seq/loss/Mean/_2105 = _Recv[client_terminated=false, recv_device="/job:localhost/replica:0/task:0/device:CPU:0", send_device="/job:localhost/replica:0/task:0/device:GPU:0", send_device_incarnation=1, tensor_name="edge_33012_seq2seq/loss/Mean", tensor_type=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:CPU:0"]()]]
+

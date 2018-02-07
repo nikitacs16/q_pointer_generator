@@ -32,7 +32,7 @@ def attention_decoder(decoder_inputs, initial_state, encoder_states, enc_padding
     encoder_states: 3D Tensor [batch_size x attn_length x attn_size].
     enc_padding_mask: 2D Tensor [batch_size x attn_length] containing 1s and 0s; indicates which of the encoder locations are padding (0) or a real token (1).
     query_states: 3D Tensor [batch_size x attn_length x attn_size].
-    query_padding_mask: 2D Tensor [batch_size x attn_length] containing 1s and 0s; indicates which of the encoder locations are padding (0) or a real token (1).
+    query_padding_mask: 2D Tensor [batch_size x q_attn_length] containing 1s and 0s; indicates which of the encoder locations are padding (0) or a real token (1).
 
     cell: rnn_cell.RNNCell defining the cell function and size.
     initial_state_attention:
@@ -54,10 +54,10 @@ def attention_decoder(decoder_inputs, initial_state, encoder_states, enc_padding
   with variable_scope.variable_scope("attention_decoder") as scope:
     batch_size = encoder_states.get_shape()[0].value # if this line fails, it's because the batch size isn't defined
     attn_size = encoder_states.get_shape()[2].value # if this line fails, it's because the attention length isn't defined
-
+    q_attn_size = query_states.get_shape()[2].value	
     # Reshape encoder_states (need to insert a dim)
     encoder_states = tf.expand_dims(encoder_states, axis=2) # now is shape (batch_size, attn_len, 1, attn_size)
-    query_states = tf.expand_dims(query_states, axis=2) # now is shape (batch_size, attn_len, 1, attn_size)
+    query_states = tf.expand_dims(query_states, axis=2) # now is shape (batch_size, q_attn_len, 1, attn_size)
 
 
     # To calculate attention, we calculate
@@ -77,10 +77,10 @@ def attention_decoder(decoder_inputs, initial_state, encoder_states, enc_padding
     v = variable_scope.get_variable("v", [attention_vec_size])
 
 
-    # Get the weight matrix W_h and apply it to each encoder state to get (W_q q_i), the query features
+    # Get the weight matrix W_q and apply it to each encoder state to get (W_q q_i), the query features
     
-    W_q = variable_scope.get_variable("W_q", [1, 1, attn_size, attention_vec_size])
-    query_features = nn_ops.conv2d(query_states, W_h, [1, 1, 1, 1], "SAME") # shape (batch_size,attn_length,1,attention_vec_size)
+    W_q = variable_scope.get_variable("W_q", [1, 1,q_attn_size, attention_vec_size])
+    query_features = nn_ops.conv2d(query_states, W_q, [1, 1, 1, 1], "SAME") # shape (batch_size,attn_length,1,attention_vec_size)
 
     # Get the weight vectors v and w_c (w_c is for coverage)
     v_q = variable_scope.get_variable("v_q", [attention_vec_size])
@@ -123,7 +123,8 @@ def attention_decoder(decoder_inputs, initial_state, encoder_states, enc_padding
           coverage_features = nn_ops.conv2d(coverage, w_c, [1, 1, 1, 1], "SAME") # c has shape (batch_size, attn_length, 1, attention_vec_size)
 
           # Calculate v^T tanh(W_h h_i + W_s s_t + w_c c_i^t + b_attn)
-          e = math_ops.reduce_sum(v * math_ops.tanh(encoder_features + query_features + decoder_features + coverage_features), [2, 3])  # shape (batch_size,attn_length)
+	  flgl = encoder_features + query_features + decoder_features + coverage_features
+          e = math_ops.reduce_sum(v * math_ops.tanh(query_features + decoder_features + coverage_features), [2, 3])  # shape (batch_size,attn_length)
 
           # Calculate attention distribution
           attn_dist = masked_attention(e)
@@ -132,7 +133,8 @@ def attention_decoder(decoder_inputs, initial_state, encoder_states, enc_padding
           coverage += array_ops.reshape(attn_dist, [batch_size, -1, 1, 1])
         else:
           # Calculate v^T tanh(W_h h_i + W_s s_t + b_attn)
-          e = math_ops.reduce_sum(v * math_ops.tanh(encoder_features + query_features + decoder_features), [2, 3]) # calculate e
+          glh =encoder_features + query_features + decoder_features
+          e = math_ops.reduce_sum(v * math_ops.tanh( query_features + decoder_features), [2, 3]) # calculate e
 
           # Calculate attention distribution
           attn_dist = masked_attention(e)

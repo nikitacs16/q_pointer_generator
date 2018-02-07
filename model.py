@@ -243,7 +243,7 @@ class SummarizationModel(object):
 				embedding = tf.get_variable('embedding', [vsize, hps.emb_dim], dtype=tf.float32, initializer=self.trunc_norm_init)
 				if hps.mode=="train": self._add_emb_vis(embedding) # add to tensorboard
 				emb_enc_inputs = tf.nn.embedding_lookup(embedding, self._enc_batch) # tensor with shape (batch_size, max_enc_steps, emb_size)
-				emb_que_inputs = tf.nn.embedding_lookup(embedding, self._que_batch) # tensor with shape (batch_size, max_enc_steps, emb_size)
+				emb_que_inputs = tf.nn.embedding_lookup(embedding, self._que_batch) # tensor with shape (batch_size, max_que_steps, emb_size)
 				
 				emb_dec_inputs = [tf.nn.embedding_lookup(embedding, x) for x in tf.unstack(self._dec_batch, axis=1)] # list length max_dec_steps containing shape (batch_size, emb_size)
 
@@ -401,7 +401,7 @@ class SummarizationModel(object):
 		# dec_in_state is LSTMStateTuple shape ([batch_size,hidden_dim],[batch_size,hidden_dim])
 		# Given that the batch is a single example repeated, dec_in_state is identical across the batch so we just take the top row.
 		dec_in_state = tf.contrib.rnn.LSTMStateTuple(dec_in_state.c[0], dec_in_state.h[0])
-		return enc_states, que_states dec_in_state
+		return enc_states, que_states, dec_in_state
 
 
 	def decode_onestep(self, sess, batch, latest_tokens, enc_states, dec_init_states, prev_coverage):

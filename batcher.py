@@ -145,6 +145,7 @@ class Batch(object):
 		"""
 		self.pad_id = vocab.word2id(data.PAD_TOKEN) # id of the PAD token used to pad sequences
 		self.init_encoder_seq(example_list, hps) # initialize the input to the encoder
+		self.init_query_seq(example_list, hps)
 		self.init_decoder_seq(example_list, hps) # initialize the input and targets for the decoder
 		self.store_orig_strings(example_list) # store the original strings
 
@@ -199,22 +200,22 @@ class Batch(object):
 
 	def init_query_seq(self, example_list, hps):
 	
-	"""Initializes the following:
-			self.que_batch:
-				numpy array of shape (batch_size, <=max_que_steps) containing integer ids (all OOVs represented by UNK id), padded to length of longest sequence in the batch
-			self.que_lens:
-				numpy array of shape (batch_size) containing integers. The (truncated) length of each encoder input sequence (pre-padding).
-			self.que_padding_mask:
-				numpy array of shape (batch_size, <=max_que_steps), containing 1s and 0s. 1s correspond to real tokens in enc_batch and target_batch; 0s correspond to padding.
-
-		
-	"""
+#	"""Initializes the following:
+#			self.que_batch:
+#				numpy array of shape (batch_size, <=max_que_steps) containing integer ids (all OOVs represented by UNK id), padded to length of longest sequence in the batch
+#			self.que_lens:
+#				numpy array of shape (batch_size) containing integers. The (truncated) length of each encoder input sequence (pre-padding).
+#			self.que_padding_mask:
+#				numpy array of shape (batch_size, <=max_que_steps), containing 1s and 0s. 1s correspond to real tokens in enc_batch and target_batch; 0s correspond to padding.
+#
+#		
+#	"""
 	# Determine the maximum length of the encoder input sequence in this batch
 		max_que_seq_len = max([ex.que_len for ex in example_list])
 
 		# Pad the encoder input sequences up to the length of the longest sequence
 		for ex in example_list:
-			ex.pad_que_input(max_que_seq_len, self.pad_id)
+			ex.pad_query_input(max_que_seq_len, self.pad_id)
 
 		# Initialize the numpy arrays
 		# Note: our enc_batch can have different length (second dimension) for each batch because we use dynamic_rnn for the encoder.
