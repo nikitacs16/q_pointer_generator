@@ -24,13 +24,16 @@ from tensorflow.python.ops import math_ops
 
 # Note: this function is based on tf.contrib.legacy_seq2seq_attention_decoder, which is now outdated.
 # In the future, it would make more sense to write variants on the attention mechanism using the new seq2seq library for tensorflow 1.0: https://www.tensorflow.org/api_guides/python/contrib.seq2seq#Attention
-def attention_decoder(decoder_inputs, initial_state, encoder_states, enc_padding_mask, cell, initial_state_attention=False, pointer_gen=True, use_coverage=False, prev_coverage=None):
+def attention_decoder(decoder_inputs, initial_state, encoder_states, enc_padding_mask, query_states, query_padding_mask, cell, initial_state_attention=False, pointer_gen=True, use_coverage=False, prev_coverage=None):
   """
   Args:
     decoder_inputs: A list of 2D Tensors [batch_size x input_size].
     initial_state: 2D Tensor [batch_size x cell.state_size].
     encoder_states: 3D Tensor [batch_size x attn_length x attn_size].
     enc_padding_mask: 2D Tensor [batch_size x attn_length] containing 1s and 0s; indicates which of the encoder locations are padding (0) or a real token (1).
+    query_states: 3D Tensor [batch_size x attn_length x attn_size].
+    query_padding_mask: 2D Tensor [batch_size x attn_length] containing 1s and 0s; indicates which of the encoder locations are padding (0) or a real token (1).
+
     cell: rnn_cell.RNNCell defining the cell function and size.
     initial_state_attention:
       Note that this attention decoder passes each decoder input through a linear layer with the previous step's context vector to get a modified version of the input. If initial_state_attention is False, on the first decoder step the "previous context vector" is just a zero vector. If initial_state_attention is True, we use initial_state to (re)calculate the previous step's context vector. We set this to False for train/eval mode (because we call attention_decoder once for all decoder steps) and True for decode mode (because we call attention_decoder once for each decoder step).
@@ -54,6 +57,8 @@ def attention_decoder(decoder_inputs, initial_state, encoder_states, enc_padding
 
     # Reshape encoder_states (need to insert a dim)
     encoder_states = tf.expand_dims(encoder_states, axis=2) # now is shape (batch_size, attn_len, 1, attn_size)
+    query_states = tf.expand_dims(query_states, axis=2) # now is shape (batch_size, attn_len, 1, attn_size)
+
 
     # To calculate attention, we calculate
     #   v^T tanh(W_h h_i + W_s s_t + b_attn)
@@ -62,12 +67,25 @@ def attention_decoder(decoder_inputs, initial_state, encoder_states, enc_padding
     # We set it to be equal to the size of the encoder states.
     attention_vec_size = attn_size
 
+    
+
     # Get the weight matrix W_h and apply it to each encoder state to get (W_h h_i), the encoder features
     W_h = variable_scope.get_variable("W_h", [1, 1, attn_size, attention_vec_size])
     encoder_features = nn_ops.conv2d(encoder_states, W_h, [1, 1, 1, 1], "SAME") # shape (batch_size,attn_length,1,attention_vec_size)
 
     # Get the weight vectors v and w_c (w_c is for coverage)
     v = variable_scope.get_variable("v", [attention_vec_size])
+
+
+    # Get the weight matrix W_h and apply it to each encoder state to get (W_q q_i), the query features
+    
+    W_q = variable_scope.get_variable("W_q", [1, 1, attn_size, attention_vec_size])
+    query_features = nn_ops.conv2d(query_states, W_h, [1, 1, 1, 1], "SAME") # shape (batch_size,attn_length,1,attention_vec_size)
+
+    # Get the weight vectors v and w_c (w_c is for coverage)
+    v_q = variable_scope.get_variable("v_q", [attention_vec_size])
+
+
     if use_coverage:
       with variable_scope.variable_scope("coverage"):
         w_c = variable_scope.get_variable("w_c", [1, 1, 1, attention_vec_size])
@@ -105,7 +123,7 @@ def attention_decoder(decoder_inputs, initial_state, encoder_states, enc_padding
           coverage_features = nn_ops.conv2d(coverage, w_c, [1, 1, 1, 1], "SAME") # c has shape (batch_size, attn_length, 1, attention_vec_size)
 
           # Calculate v^T tanh(W_h h_i + W_s s_t + w_c c_i^t + b_attn)
-          e = math_ops.reduce_sum(v * math_ops.tanh(encoder_features + decoder_features + coverage_features), [2, 3])  # shape (batch_size,attn_length)
+          e = math_ops.reduce_sum(v * math_ops.tanh(encoder_features + query_features + decoder_features + coverage_features), [2, 3])  # shape (batch_size,attn_length)
 
           # Calculate attention distribution
           attn_dist = masked_attention(e)
@@ -114,7 +132,7 @@ def attention_decoder(decoder_inputs, initial_state, encoder_states, enc_padding
           coverage += array_ops.reshape(attn_dist, [batch_size, -1, 1, 1])
         else:
           # Calculate v^T tanh(W_h h_i + W_s s_t + b_attn)
-          e = math_ops.reduce_sum(v * math_ops.tanh(encoder_features + decoder_features), [2, 3]) # calculate e
+          e = math_ops.reduce_sum(v * math_ops.tanh(encoder_features + query_features + decoder_features), [2, 3]) # calculate e
 
           # Calculate attention distribution
           attn_dist = masked_attention(e)
