@@ -57,6 +57,7 @@ class SummarizationModel(object):
 
 		if hps.mode=="decode" and hps.coverage:
 			self.prev_coverage = tf.placeholder(tf.float32, [hps.batch_size, None], name='prev_coverage')
+			self.prev_q_coverage = tf.placeholder(tf.float32, [hps.batch_size, None], name='prev_q_coverage')
 
 
 	def _make_feed_dict(self, batch, just_enc=False):
@@ -171,9 +172,11 @@ class SummarizationModel(object):
 
 		prev_coverage = self.prev_coverage if hps.mode=="decode" and hps.coverage else None # In decode mode, we run attention_decoder one step at a time and so need to pass in the previous step's coverage vector each time
 
-		outputs, out_state, attn_dists, p_gens, coverage = attention_decoder(inputs, self._dec_in_state, self._enc_states, self._enc_padding_mask, self._que_states, self._que_padding_mask, cell, initial_state_attention=(hps.mode=="decode"), pointer_gen=hps.pointer_gen, use_coverage=hps.coverage, prev_coverage=prev_coverage)
+		prev_q_coverage = self.prev_q_coverage if hps.mode=="decode" and hps.coverage else None
 
-		return outputs, out_state, attn_dists, p_gens, coverage
+		outputs, out_state, attn_dists, p_gens, coverage, q_coverage = attention_decoder(inputs, self._dec_in_state, self._enc_states, self._enc_padding_mask, self._que_states, self._que_padding_mask, cell, initial_state_attention=(hps.mode=="decode"), pointer_gen=hps.pointer_gen, use_coverage=hps.coverage, prev_coverage=prev_coverage, prev_q_coverage=prev_q_coverage)
+
+		return outputs, out_state, attn_dists, p_gens, coverage, q_coverage
 
 	def _calc_final_dist(self, vocab_dists, attn_dists):
 		"""Calculate the final distribution, for the pointer-generator model
@@ -262,7 +265,7 @@ class SummarizationModel(object):
 
 			# Add the decoder.
 			with tf.variable_scope('decoder'):
-				decoder_outputs, self._dec_out_state, self.attn_dists, self.p_gens, self.coverage = self._add_decoder(emb_dec_inputs)
+				decoder_outputs, self._dec_out_state, self.attn_dists, self.p_gens, self.coverage, self.q_coverage = self._add_decoder(emb_dec_inputs)
 
 			# Add the output projection to obtain the vocabulary distribution
 			with tf.variable_scope('output_projection'):
@@ -404,7 +407,7 @@ class SummarizationModel(object):
 		return enc_states, que_states, dec_in_state
 
 
-	def decode_onestep(self, sess, batch, latest_tokens, enc_states, dec_init_states, prev_coverage):
+	def decode_onestep(self, sess, batch, latest_tokens, enc_states, que_states, dec_init_states, prev_coverage, prev_q_coverage):
 		"""For beam search decoding. Run the decoder for one step.
 
 		Args:
@@ -436,6 +439,7 @@ class SummarizationModel(object):
 
 		feed = {
 				self._enc_states: enc_states,
+				self._que_states: que_states,
 				self._enc_padding_mask: batch.enc_padding_mask,
 				self._dec_in_state: new_dec_in_state,
 				self._dec_batch: np.transpose(np.array([latest_tokens])),
@@ -455,7 +459,10 @@ class SummarizationModel(object):
 
 		if self._hps.coverage:
 			feed[self.prev_coverage] = np.stack(prev_coverage, axis=0)
+			feed[self.prev_q_coverage] = np.stack(prev_q_coverage, axis=0)
+			
 			to_return['coverage'] = self.coverage
+			to_return['q_coverage'] = self.q_coverage
 
 		results = sess.run(to_return, feed_dict=feed) # run the decoder step
 
@@ -476,11 +483,13 @@ class SummarizationModel(object):
 		# Convert the coverage tensor to a list length k containing the coverage vector for each hypothesis
 		if FLAGS.coverage:
 			new_coverage = results['coverage'].tolist()
+			new_q_coverage = results['q_coverage'].tolist()
 			assert len(new_coverage) == beam_size
 		else:
 			new_coverage = [None for _ in xrange(beam_size)]
+			q_new_coverage = [None for _ in xrange(beam_size)]
 
-		return results['ids'], results['probs'], new_states, attn_dists, p_gens, new_coverage
+		return results['ids'], results['probs'], new_states, attn_dists, p_gens, new_coverage, new_q_coverage
 
 
 def _mask_and_avg(values, padding_mask):

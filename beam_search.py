@@ -25,7 +25,7 @@ FLAGS = tf.app.flags.FLAGS
 class Hypothesis(object):
   """Class to represent a hypothesis during beam search. Holds all the information needed for the hypothesis."""
 
-  def __init__(self, tokens, log_probs, state, attn_dists, p_gens, coverage):
+  def __init__(self, tokens, log_probs, state, attn_dists, p_gens, coverage, q_coverage):
     """Hypothesis constructor.
 
     Args:
@@ -42,8 +42,9 @@ class Hypothesis(object):
     self.attn_dists = attn_dists
     self.p_gens = p_gens
     self.coverage = coverage
+    self.q_coverage = q_coverage
 
-  def extend(self, token, log_prob, state, attn_dist, p_gen, coverage):
+  def extend(self, token, log_prob, state, attn_dist, p_gen, coverage, q_coverage):
     """Return a NEW hypothesis, extended with the information from the latest step of beam search.
 
     Args:
@@ -61,7 +62,8 @@ class Hypothesis(object):
                       state = state,
                       attn_dists = self.attn_dists + [attn_dist],
                       p_gens = self.p_gens + [p_gen],
-                      coverage = coverage)
+                      coverage = coverage, 
+                      q_coverage = q_coverage)
 
   @property
   def latest_token(self):
@@ -91,7 +93,7 @@ def run_beam_search(sess, model, vocab, batch):
     best_hyp: Hypothesis object; the best hypothesis found by beam search.
   """
   # Run the encoder to get the encoder hidden states and decoder initial state
-  enc_states, dec_in_state = model.run_encoder(sess, batch)
+  enc_states, que_states, dec_in_state = model.run_encoder(sess, batch)
   # dec_in_state is a LSTMStateTuple
   # enc_states has shape [batch_size, <=max_enc_steps, 2*hidden_dim].
 
@@ -101,7 +103,8 @@ def run_beam_search(sess, model, vocab, batch):
                      state=dec_in_state,
                      attn_dists=[],
                      p_gens=[],
-                     coverage=np.zeros([batch.enc_batch.shape[1]]) # zero vector of length attention_length
+                     coverage=np.zeros([batch.enc_batch.shape[1]]), # zero vector of length attention_length
+                     q_coverage=np.zeros([batch.que_batch.shape[1]])
                      ) for _ in xrange(FLAGS.beam_size)]
   results = [] # this will contain finished hypotheses (those that have emitted the [STOP] token)
 
@@ -113,18 +116,20 @@ def run_beam_search(sess, model, vocab, batch):
     prev_coverage = [h.coverage for h in hyps] # list of coverage vectors (or None)
 
     # Run one step of the decoder to get the new info
-    (topk_ids, topk_log_probs, new_states, attn_dists, p_gens, new_coverage) = model.decode_onestep(sess=sess,
+    (topk_ids, topk_log_probs, new_states, attn_dists, p_gens, new_coverage, new_q_coverage) = model.decode_onestep(sess=sess,
                         batch=batch,
                         latest_tokens=latest_tokens,
                         enc_states=enc_states,
                         dec_init_states=states,
-                        prev_coverage=prev_coverage)
+                        prev_coverage=prev_coverage,
+                        prev_q_coverage=prev_q_coverage)
+
 
     # Extend each hypothesis and collect them all in all_hyps
     all_hyps = []
     num_orig_hyps = 1 if steps == 0 else len(hyps) # On the first step, we only had one original hypothesis (the initial hypothesis). On subsequent steps, all original hypotheses are distinct.
     for i in xrange(num_orig_hyps):
-      h, new_state, attn_dist, p_gen, new_coverage_i = hyps[i], new_states[i], attn_dists[i], p_gens[i], new_coverage[i]  # take the ith hypothesis and new decoder state info
+      h, new_state, attn_dist, p_gen, new_coverage_i, new_q_coverage_i = hyps[i], new_states[i], attn_dists[i], p_gens[i], new_coverage[i], new_q_coverage[i]  # take the ith hypothesis and new decoder state info
       for j in xrange(FLAGS.beam_size * 2):  # for each of the top 2*beam_size hyps:
         # Extend the ith hypothesis with the jth option
         new_hyp = h.extend(token=topk_ids[i, j],

@@ -89,10 +89,12 @@ class BeamSearchDecoder(object):
         return
 
       original_article = batch.original_articles[0]  # string
+      original_query = batch.original_queries[0]  # string
       original_abstract = batch.original_abstracts[0]  # string
       original_abstract_sents = batch.original_abstracts_sents[0]  # list of strings
 
       article_withunks = data.show_art_oovs(original_article, self._vocab) # string
+      #query_withunks = data.show_art_oovs(original_article, self._vocab) # string
       abstract_withunks = data.show_abs_oovs(original_abstract, self._vocab, (batch.art_oovs[0] if FLAGS.pointer_gen else None)) # string
 
       # Run beam search to get best Hypothesis
