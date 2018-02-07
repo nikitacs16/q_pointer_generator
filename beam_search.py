@@ -120,6 +120,7 @@ def run_beam_search(sess, model, vocab, batch):
                         batch=batch,
                         latest_tokens=latest_tokens,
                         enc_states=enc_states,
+                        que_states=que_states,
                         dec_init_states=states,
                         prev_coverage=prev_coverage,
                         prev_q_coverage=prev_q_coverage)
