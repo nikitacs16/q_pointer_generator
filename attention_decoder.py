@@ -240,7 +240,7 @@ def attention_decoder(decoder_inputs, initial_state, encoder_states, enc_padding
 					q_context_vector, q_attn_dist, _ = query_attention(state, q_coverage) # don't allow coverage to update
 			else:
 				context_vector, attn_dist, coverage = attention(state, coverage)
-				q_context_vector, q_attn_dist, q_coverage = attention(state, q_coverage)
+				q_context_vector, q_attn_dist, q_coverage = query_attention(state, q_coverage)
 
 			attn_dists.append(attn_dist)
 			#q_attn_dists.append(q_attn_dist)
