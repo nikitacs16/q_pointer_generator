@@ -488,7 +488,7 @@ class SummarizationModel(object):
 			assert len(new_coverage) == beam_size
 		else:
 			new_coverage = [None for _ in xrange(beam_size)]
-			q_new_coverage = [None for _ in xrange(beam_size)]
+			new_q_coverage = [None for _ in xrange(beam_size)]
 
 		return results['ids'], results['probs'], new_states, attn_dists, p_gens, new_coverage, new_q_coverage
 
