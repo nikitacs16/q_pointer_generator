@@ -146,7 +146,7 @@ def attention_decoder(decoder_inputs, initial_state, encoder_states, enc_padding
 				context_vector = array_ops.reshape(context_vector, [-1, attn_size])
 
 			return context_vector, attn_dist, coverage
-		def query_attention(decoder_state, coverage=None):
+		def query_attention(decoder_state, q_coverage=None):
 			"""Calculate the  query context vector and attention distribution from the decoder state.
 
 			Args:
