@@ -114,8 +114,8 @@ def attention_decoder(decoder_inputs, initial_state, encoder_states, enc_padding
 
 				def masked_attention(e):
 					"""Take softmax of e then apply enc_padding_mask and re-normalize"""
-					attn_dist = nn_ops.softmax(e) # take softmax. shape (batch_size, attn_length)
-					attn_dist *= enc_padding_mask # apply mask
+					attn_dist = nn_ops.softmax(e*enc_padding_mask) # take softmax. shape (batch_size, attn_length)
+					#attn_dist *= enc_padding_mask # apply mask
 					masked_sums = tf.reduce_sum(attn_dist, axis=1) # shape (batch_size)
 					return attn_dist / tf.reshape(masked_sums, [-1, 1]) # re-normalize
 
@@ -165,8 +165,8 @@ def attention_decoder(decoder_inputs, initial_state, encoder_states, enc_padding
 
 				def masked_attention(e):
 					"""Take softmax of e then apply enc_padding_mask and re-normalize"""
-					attn_dist = nn_ops.softmax(e) # take softmax. shape (batch_size, attn_length)
-					attn_dist *= que_padding_mask # apply mask
+					attn_dist = nn_ops.softmax(e*que_padding_mask) # take softmax. shape (batch_size, attn_length)
+					#attn_dist *= que_padding_mask # apply mask
 					masked_sums = tf.reduce_sum(attn_dist, axis=1) # shape (batch_size)
 					return attn_dist / tf.reshape(masked_sums, [-1, 1]) # re-normalize
 				
