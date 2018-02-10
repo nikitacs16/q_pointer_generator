@@ -74,7 +74,7 @@ def attention_decoder(decoder_inputs, initial_state, encoder_states, enc_padding
 
 		 # Get the weight matrix W_q and apply it to each encoder state to get (W_q q_i), the query features
 		W_q = variable_scope.get_variable("W_q", [1, 1, q_attn_size, q_attention_vec_size])
-		query_features = nn_ops.conv2d(query_states, W_h, [1, 1, 1, 1], "SAME") # shape (batch_size,q_attn_length,1,q_attention_vec_size)
+		query_features = nn_ops.conv2d(query_states, W_q, [1, 1, 1, 1], "SAME") # shape (batch_size,q_attn_length,1,q_attention_vec_size)
 
 		# Get the weight vectors v_q 
 		v_q = variable_scope.get_variable("v_q", [q_attention_vec_size])
