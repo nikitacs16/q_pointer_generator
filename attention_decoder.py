@@ -191,7 +191,7 @@ def attention_decoder(decoder_inputs, initial_state, encoder_states, enc_padding
 					q_attn_dist = masked_attention(f)
 
 					if use_coverage: # first step of training
-						q_coverage = tf.expand_dims(tf.expand_dims(attn_dist,2),2) # initialize coverage
+						q_coverage = tf.expand_dims(tf.expand_dims(q_attn_dist,2),2) # initialize coverage
 
 				# Calculate the context vector from attn_dist and encoder_states
 				q_context_vector = math_ops.reduce_sum(array_ops.reshape(q_attn_dist, [batch_size, -1, 1, 1]) * query_states, [1, 2]) # shape (batch_size, attn_size).
