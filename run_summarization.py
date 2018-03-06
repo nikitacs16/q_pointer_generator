@@ -34,7 +34,6 @@ import re
 FLAGS = tf.app.flags.FLAGS
 tf.app.flags.DEFINE_string('config_file', 'config.yaml', 'pass the config_file through command line if new expt')
 config = yaml.load(open(FLAGS.config_file,'r'))
-
 tf.app.flags.DEFINE_string('mode', 'train', 'must be one of train/eval/decode')
 tf.app.flags.DEFINE_string('vocab_path', config['vocab_path'], 'Path expression to text vocabulary file.')
 tf.app.flags.DEFINE_boolean('debug', False, "Run in tensorflow's debug mode (watches for NaN/inf values)")
@@ -44,25 +43,6 @@ tf.app.flags.DEFINE_boolean('coverage', False, 'Use coverage mechanism. Note, th
 tf.app.flags.DEFINE_float('cov_loss_wt', 1.0, 'Weight of coverage loss (lambda in the paper). If zero, then no incentive to minimize coverage loss.')
 tf.app.flags.DEFINE_boolean('convert_to_coverage_model', False, 'Convert a non-coverage model to a coverage model. Turn this on and run in train mode. Your current training model will be copied to a new version (same name with _cov_init appended) that will be ready to run with coverage flag turned on, for the coverage training stage.')
 
-if FLAGS.mode == 'train':
-	tf.app.flags.DEFINE_string('data_path', config['train_path'], 'Path expression to tf.Example datafiles. Can include wildcards to access multiple datafiles.')
-
-if FLAGS.mode == 'eval':
-	tf.app.flags.DEFINE_string('data_path', config['dev_path'], 'Path expression to tf.Example datafiles. Can include wildcards to access multiple datafiles.')
-
-if FLAGS.mode == 'decode':
-	FLAGS.single_pass = True
-	tf.app.flags.DEFINE_string('data_path', config['test_path'], 'Path expression to tf.Example datafiles. Can include wildcards to access multiple datafiles.')
-
-if FLAGS.mode == 'restore_best_model':
-	FLAGS.restore_best_model = True
-	
-if FLAGS.mode == 'debug':
-	FLAGS.debug = True
-	tf.app.flags.DEFINE_string('data_path', config['train_path'], 'Path expression to tf.Example datafiles. Can include wildcards to access multiple datafiles.')
-
-if FLAGS.mode == 'convert_to_coverage_model':
-	FLAGS.coverage = True
 
 #storage
 tf.app.flags.DEFINE_string('log_root',config['log_root'], 'Root directory for all logging.')
@@ -297,6 +277,25 @@ def run_eval(model, batcher, vocab):
 
 
 def main(unused_argv):
+	global config
+	
+	if FLAGS.mode == 'eval':
+		FLAGS.data_path = config['dev_path']
+	
+	if FLAGS.mode == 'decode':
+		FLAGS.single_pass = True
+		FLAGS.data_path = config['test_path']
+	
+	if FLAGS.mode == 'restore_best_model':
+		FLAGS.restore_best_model = True
+	
+	if FLAGS.mode == 'debug':
+		FLAGS.debug = True
+
+		
+	if FLAGS.mode == 'convert_to_coverage_model':
+		FLAGS.coverage = True
+
 	if len(unused_argv) != 1: # prints a message if you've entered flags incorrectly
 		raise Exception("Problem with flags: %s" % unused_argv)
 
