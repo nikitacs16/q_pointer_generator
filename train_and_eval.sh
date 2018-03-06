@@ -1,0 +1,1 @@
+python run_summarization.py --mode=train >out_train && python run_summarization.py --mode=eval >out_eval
