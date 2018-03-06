@@ -61,7 +61,7 @@ if FLAGS.mode == 'debug':
 	FLAGS.debug = True
 	tf.app.flags.DEFINE_string('data_path', config['train_path'], 'Path expression to tf.Example datafiles. Can include wildcards to access multiple datafiles.')
 
-if FLAGS.mode = 'convert_to_coverage_model':
+if FLAGS.mode == 'convert_to_coverage_model':
 	FLAGS.coverage = True
 
 #storage
@@ -352,7 +352,7 @@ def main(unused_argv):
 	elif hps.mode == 'restore_best_model':
 		model = SummarizationModel(hps, vocab)
 		setup_training(model, batcher)
-	elif hps.mode == 'convert_to_coverage_model'
+	elif hps.mode == 'convert_to_coverage_model':
 		model = SummarizationModel(hps, vocab)
 		setup_training(model, batcher)
 	else:

@@ -1,12 +1,12 @@
 #data_paths
-train_data_path: ''
-dev_data_path: ''
-val_data_path: ''
-vocab_path: ''
+train_path: '/mnt/finished_files/chunked/train_*'
+dev_path: '/mnt/finished_files/chunked/val_*'
+test_path: '/mnt/finished_files/chunked/test_*'
+vocab_path: '/mt/finished_files/vocab'
 
 #output paths
-log_root: '' #Root directory for all logging.
-exp_name: '' #Name for experiment. Logs will be saved in a directory with this name, under log_root.
+log_root: '/mnt/pg' #Root directory for all logging.
+exp_name: 'automate' #Name for experiment. Logs will be saved in a directory with this name, under log_root.
 
 #Hyperparameters
 hidden_dim: 200 #dimension of RNN hidden states
@@ -27,4 +27,4 @@ max_grad_norm: 2.0 #for gradient clipping
 #other_options
 pointer_gen: True #If True, use pointer-generator model. If False, use baseline model.
 max_to_keep: 10
-early_stopping_steps: 12000
+early_stopping_steps: 1000
