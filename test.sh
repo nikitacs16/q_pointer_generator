@@ -1,1 +1,0 @@
-python run_summarization.py --mode=decode
