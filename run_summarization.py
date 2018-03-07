@@ -35,6 +35,7 @@ FLAGS = tf.app.flags.FLAGS
 tf.app.flags.DEFINE_string('config_file', 'config.yaml', 'pass the config_file through command line if new expt')
 config = yaml.load(open(FLAGS.config_file,'r'))
 tf.app.flags.DEFINE_string('mode', 'train', 'must be one of train/eval/decode')
+tf.app.flags.DEFINE_string('data_path',config['train_path'],'Default path to the chunked files')
 tf.app.flags.DEFINE_string('vocab_path', config['vocab_path'], 'Path expression to text vocabulary file.')
 tf.app.flags.DEFINE_boolean('debug', False, "Run in tensorflow's debug mode (watches for NaN/inf values)")
 tf.app.flags.DEFINE_boolean('single_pass', False, 'For decode mode only. If True, run eval on the full dataset using a fixed checkpoint, i.e. take the current checkpoint, and use it to produce one summary for each example in the dataset, write the summaries to file and then get ROUGE scores for the whole dataset. If False (default), run concurrent decoding, i.e. repeatedly load latest checkpoint, use it to produce summaries for randomly-chosen examples and log the results to screen, indefinitely.')
@@ -42,7 +43,7 @@ tf.app.flags.DEFINE_boolean('pointer_gen', config['pointer_gen'], 'If True, use 
 tf.app.flags.DEFINE_boolean('coverage', False, 'Use coverage mechanism. Note, the experiments reported in the ACL paper train WITHOUT coverage until converged, and then train for a short phase WITH coverage afterwards. i.e. to reproduce the results in the ACL paper, turn this off for most of training then turn on for a short phase at the end.')
 tf.app.flags.DEFINE_float('cov_loss_wt', 1.0, 'Weight of coverage loss (lambda in the paper). If zero, then no incentive to minimize coverage loss.')
 tf.app.flags.DEFINE_boolean('convert_to_coverage_model', False, 'Convert a non-coverage model to a coverage model. Turn this on and run in train mode. Your current training model will be copied to a new version (same name with _cov_init appended) that will be ready to run with coverage flag turned on, for the coverage training stage.')
-
+tf.app.flags.DEFINE_boolean('restore_best_model', False, 'Restore the best model in the eval/ dir and save it in the train/ dir, ready to be used for further training. Useful for early stopping, or if your training checkpoint has become corrupted with e.g. NaN values.')
 
 #storage
 tf.app.flags.DEFINE_string('log_root',config['log_root'], 'Root directory for all logging.')
@@ -65,7 +66,7 @@ tf.app.flags.DEFINE_float('rand_unif_init_mag', config['rand_unif_init_mag'], 'm
 tf.app.flags.DEFINE_float('trunc_norm_init_std', config['trunc_norm_init_std'], 'std of trunc norm init, used for initializing everything else')
 tf.app.flags.DEFINE_float('max_grad_norm', config['max_grad_norm'], 'for gradient clipping')
 tf.app.flags.DEFINE_integer('max_to_keep',config['max_to_keep'] , 'maximum models to keep')
-
+tf.app.flags.DEFINE_integer('early_stopping_steps', config['early_stopping_steps'], 'setting up patience parameter')
 # Pointer-generator or baseline model
 
 def calc_running_avg_loss(loss, running_avg_loss, summary_writer, step, decay=0.99):
@@ -155,7 +156,7 @@ def setup_training(model, batcher):
 		convert_to_coverage_model()
 	if FLAGS.restore_best_model:
 		restore_best_model()
-	saver = tf.train.Saver(FLAGS.max_to_keep) # keep 3 checkpoints at a time
+	saver = tf.train.Saver(max_to_keep=FLAGS.max_to_keep) # keep 3 checkpoints at a time
 
 	sv = tf.train.Supervisor(logdir=train_dir,
 										 is_chief=True,
@@ -211,19 +212,19 @@ def run_training(model, batcher, sess_context_manager, sv, summary_writer):
 				summary_writer.flush()
 			
 				if check_for_early_stopping(train_step): #some condition
-					tf.logging.info("Early stopped. Now saving the best model")
-					restore_best_model()
+					tf.logging.info("Early stopped")
+					return
 
 def check_for_early_stopping(train_step):
 	eval_dir = os.path.join(FLAGS.log_root, "eval") # make a subdir of the root dir for eval data
 	ckpt_file = open(eval_dir+'/checkpoint_best','r')
-	pattern = 'model_checkpoint_path:'
+	pattern_in_line = 'model_checkpoint_path:'
 	for line in ckpt_file.readlines():
 		if pattern_in_line:
-			val_step = int(re.findall(r"[0-9]{4,5}", line)[0])
+			val_step = int(re.findall(r"[0-9]{1,5}", line)[0])
 			break
 
-	patience_steps = FLAGS.patience_steps
+	patience_steps = FLAGS.early_stopping_steps
 	if patience_steps < (train_step - val_step):
 		return True
 	return False
@@ -231,7 +232,7 @@ def check_for_early_stopping(train_step):
 def run_eval(model, batcher, vocab):
 	"""Repeatedly runs eval iterations, logging to screen and writing summaries. Saves the model with the best loss seen so far."""
 	model.build_graph() # build the graph
-	saver = tf.train.Saver(FLAGS.max_to_keep) # we will keep 3 best checkpoints at a time
+	saver = tf.train.Saver(max_to_keep=FLAGS.max_to_keep) # we will keep 3 best checkpoints at a time
 	sess = tf.Session(config=util.get_config())
 	eval_dir = os.path.join(FLAGS.log_root, "eval") # make a subdir of the root dir for eval data
 	bestmodel_save_path = os.path.join(eval_dir, 'bestmodel') # this is where checkpoints of best models are saved

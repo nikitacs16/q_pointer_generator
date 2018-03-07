@@ -27,6 +27,7 @@ import util
 import logging
 import numpy as np
 from metrics import bleu,rouge
+import glob
 
 FLAGS = tf.app.flags.FLAGS
 
@@ -81,6 +82,8 @@ class BeamSearchDecoder(object):
 		counter = 0
 		while True:
 			batch = self._batcher.next_batch()  # 1 example repeated across batch
+#			if counter == 10:
+#				batch = None
 			if batch is None: # finished decoding dataset in single_pass mode
 				assert FLAGS.single_pass, "Dataset exhausted, but we are not in single_pass mode"
 				tf.logging.info("Decoder has finished reading dataset for single_pass.")
@@ -146,11 +149,12 @@ class BeamSearchDecoder(object):
 			reference.append(ref_tex)
 			decoded.append(dec_tex)
 		
-		if len(reference)!=len(dec):
+		if len(reference)!=len(decoded):
 			raise ValueError("Hypotheses and References don't have equal lengths")
 		
 		rouge_dict = rouge.rouge(decoded,reference)
-		f = open('results.txt','w')
+		file_path = os.path.join(self._decode_dir,'results.txt')
+		f = open(file_path,'w')
 		for key in rouge_dict: 
 			print("%s\t%f"%(key,rouge_dict[key]),file=f)
 		bleu_score = bleu.moses_multi_bleu(decoded,reference)

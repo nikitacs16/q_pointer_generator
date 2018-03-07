@@ -1,0 +1,10 @@
+rouge_l/r_score	0.108487
+rouge_l/p_score	0.229444
+rouge_1/r_score	0.120288
+rouge_1/p_score	0.245952
+rouge_l/f_score	0.119400
+rouge_1/f_score	0.160169
+rouge_2/f_score	0.072794
+rouge_2/p_score	0.125000
+rouge_2/r_score	0.052273
+bleu	3.040000

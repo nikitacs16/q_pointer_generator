@@ -6,7 +6,8 @@ vocab_path: '/mnt/finished_files/vocab'
 
 #output paths
 log_root: '/mnt/pg' #Root directory for all logging.
-exp_name: 'automate' #Name for experiment. Logs will be saved in a directory with this name, under log_root
+exp_name: 'automate' #Name for experiment. Logs will be saved in a directory with this name, under log_root.
+
 #Hyperparameters
 hidden_dim: 200 #dimension of RNN hidden states
 emb_dim: 128 #dimension of word embeddings
