@@ -266,7 +266,7 @@ class SummarizationModel(object):
 			# Add the decoder.
 			with tf.variable_scope('decoder'):
 				decoder_outputs, self._dec_out_state, self.attn_dists, self.p_gens, self.coverage, self.q_coverage = self._add_decoder(emb_dec_inputs)
-
+				tf.summary.tensor_summary(name='p_gens',tensor = tf.convert_to_tensor(self.p_gens))
 			# Add the output projection to obtain the vocabulary distribution
 			with tf.variable_scope('output_projection'):
 				w = tf.get_variable('w', [hps.hidden_dim, vsize], dtype=tf.float32, initializer=self.trunc_norm_init)
