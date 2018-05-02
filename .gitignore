@@ -1,3 +1,5 @@
 *.pyc
 finished_files/
 logs/
+small_*
+out*
