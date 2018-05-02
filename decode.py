@@ -28,12 +28,13 @@ import logging
 import numpy as np
 from metrics import bleu,rouge
 import glob
-
+import  pickle
 FLAGS = tf.app.flags.FLAGS
 
 SECS_UNTIL_NEW_CKPT = 60  # max number of seconds before loading new checkpoint
-
-
+all_pgens = []
+all_attn_dists = []
+dec_words = []
 class BeamSearchDecoder(object):
 	"""Beam search decoder."""
 
@@ -85,6 +86,10 @@ class BeamSearchDecoder(object):
 #			if counter == 10:
 #				batch = None
 			if batch is None: # finished decoding dataset in single_pass mode
+				d = [all_attn_dists,all_pgens,dec_words]
+                        	output_fname = os.path.join(self._decode_dir, 'attn_dist_p_gens_data.pkl')
+
+                        	pickle.dump(d,open(output_fname,'wb'))
 				assert FLAGS.single_pass, "Dataset exhausted, but we are not in single_pass mode"
 				tf.logging.info("Decoder has finished reading dataset for single_pass.")
 				tf.logging.info("Output has been saved in %s and %s. Now starting eval...", self._rouge_ref_dir, self._rouge_dec_dir)
@@ -119,6 +124,10 @@ class BeamSearchDecoder(object):
 			if FLAGS.single_pass:
 				self.write_for_rouge(original_abstract_sents, decoded_words, counter) # write ref summary and decoded summary to file, to eval with pyrouge later
 				counter += 1 # this is how many examples we've decoded
+				all_attn_dists.append(best_hyp.attn_dists)
+				all_pgens.append(best_hyp.p_gens)
+				dec_words.append(decoded_words)
+#				self.write_for_attnvis(article_withunks, abstract_withunks, decoded_words, best_hyp.attn_dists, best_hyp.p_gens,count=counter)
 			else:
 				print_results(article_withunks, abstract_withunks, decoded_output) # log output to screen
 				self.write_for_attnvis(article_withunks, abstract_withunks, decoded_words, best_hyp.attn_dists, best_hyp.p_gens) # write info to .json file for visualization tool
@@ -129,6 +138,10 @@ class BeamSearchDecoder(object):
 					tf.logging.info('We\'ve been decoding with same checkpoint for %i seconds. Time to load new checkpoint', t1-t0)
 					_ = util.load_ckpt(self._saver, self._sess)
 					t0 = time.time()
+			#d = [all_attn_dists,all_pgens]
+			#output_fname = os.path.join(self._decode_dir, 'attn_dist_p_gens_data.json')
+
+			#json.dump(d,open(output_fname,'w'))
 
 	def get_metrics(self, ref_dir, dec_dir):
 		reference = []
@@ -199,7 +212,7 @@ class BeamSearchDecoder(object):
 		tf.logging.info("Wrote example %i to file" % ex_index)
 
 
-	def write_for_attnvis(self, article, abstract, decoded_words, attn_dists, p_gens):
+	def write_for_attnvis(self, article, abstract, decoded_words, attn_dists, p_gens,count=''):
 		"""Write some data to json file, which can be read into the in-browser attention visualizer tool:
 			https://github.com/abisee/attn_vis
 
@@ -220,7 +233,8 @@ class BeamSearchDecoder(object):
 		}
 		if FLAGS.pointer_gen:
 			to_write['p_gens'] = p_gens
-		output_fname = os.path.join(self._decode_dir, 'attn_vis_data.json')
+		fname = 'attn_vis_data_' + str(count) + '.json' 
+		output_fname = os.path.join(self._decode_dir, fname)
 		with open(output_fname, 'w') as output_file:
 			json.dump(to_write, output_file)
 		tf.logging.info('Wrote visualization data to %s', output_fname)

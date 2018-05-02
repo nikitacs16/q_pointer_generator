@@ -30,6 +30,7 @@ import util
 from tensorflow.python import debug as tf_debug
 import yaml
 import re
+import pickle
 
 FLAGS = tf.app.flags.FLAGS
 tf.app.flags.DEFINE_string('config_file', 'config.yaml', 'pass the config_file through command line if new expt')
@@ -216,14 +217,15 @@ def run_training(model, batcher, sess_context_manager, sv, summary_writer):
 					return
 
 def check_for_early_stopping(train_step):
+	tf.logging.info(train_step)
 	eval_dir = os.path.join(FLAGS.log_root, "eval") # make a subdir of the root dir for eval data
 	ckpt_file = open(eval_dir+'/checkpoint_best','r')
 	pattern_in_line = 'model_checkpoint_path:'
 	for line in ckpt_file.readlines():
 		if pattern_in_line:
-			val_step = int(re.findall(r"[0-9]{1,5}", line)[0])
+			val_step = int(re.findall(r"\d{4,7}(?!\d)", line)[0])
 			break
-
+	tf.logging.info(val_step)
 	patience_steps = FLAGS.early_stopping_steps
 	if patience_steps < (train_step - val_step):
 		return True
