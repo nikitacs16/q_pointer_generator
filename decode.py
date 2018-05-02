@@ -146,22 +146,22 @@ class BeamSearchDecoder(object):
 	def get_metrics(self, ref_dir, dec_dir):
 		reference = []
 		decoded = []
-
+		
 		for i, j in zip(sorted(glob.glob(dec_dir+'/'+'*.txt')),sorted(glob.glob(ref_dir+'/'+'*.txt'))):
 			ref_tex = ''
 			dec_tex = ''
 			
 			for k in open(i).readlines():
-				dec_tex = dec_tex + k
+				dec_tex = dec_text + k.strip() 
 				if len(dec_tex)==0:
 					dec_tex = ' '
-			
+				
 			for l in open(j).readlines():
 				ref_tex = ref_tex + l
 			
 			reference.append(ref_tex)
 			decoded.append(dec_tex)
-		
+			
 		if len(reference)!=len(decoded):
 			raise ValueError("Hypotheses and References don't have equal lengths")
 		
