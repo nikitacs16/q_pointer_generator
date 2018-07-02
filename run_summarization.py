@@ -22,7 +22,7 @@ import os
 import tensorflow as tf
 import numpy as np
 from collections import namedtuple
-from data import Vocab
+from data import Vocab, build_feature_dict
 from batcher import Batcher
 from model import SummarizationModel
 from decode import BeamSearchDecoder
@@ -30,7 +30,7 @@ import util
 from tensorflow.python import debug as tf_debug
 import yaml
 import re
-import pickle
+import json
 
 FLAGS = tf.app.flags.FLAGS
 tf.app.flags.DEFINE_string('config_file', 'config.yaml', 'pass the config_file through command line if new expt')
@@ -38,6 +38,8 @@ config = yaml.load(open(FLAGS.config_file,'r'))
 tf.app.flags.DEFINE_string('mode', 'train', 'must be one of train/eval/decode')
 tf.app.flags.DEFINE_string('data_path',config['train_path'],'Default path to the chunked files')
 tf.app.flags.DEFINE_string('vocab_path', config['vocab_path'], 'Path expression to text vocabulary file.')
+tf.app.flags.DEFINE_string('feature_meta_path', config['feature_meta_path'], 'Path expression to feature meta data path.')
+feature_meta = json.load(open(FLAGS.feature_meta_path,'r'))
 tf.app.flags.DEFINE_boolean('debug', False, "Run in tensorflow's debug mode (watches for NaN/inf values)")
 tf.app.flags.DEFINE_boolean('single_pass', False, 'For decode mode only. If True, run eval on the full dataset using a fixed checkpoint, i.e. take the current checkpoint, and use it to produce one summary for each example in the dataset, write the summaries to file and then get ROUGE scores for the whole dataset. If False (default), run concurrent decoding, i.e. repeatedly load latest checkpoint, use it to produce summaries for randomly-chosen examples and log the results to screen, indefinitely.')
 tf.app.flags.DEFINE_boolean('pointer_gen', config['pointer_gen'], 'If True, use pointer-generator model. If False, use baseline model.')
@@ -69,6 +71,15 @@ tf.app.flags.DEFINE_float('max_grad_norm', config['max_grad_norm'], 'for gradien
 tf.app.flags.DEFINE_integer('max_to_keep',config['max_to_keep'] , 'maximum models to keep')
 tf.app.flags.DEFINE_integer('early_stopping_steps', config['early_stopping_steps'], 'setting up patience parameter')
 # Pointer-generator or baseline model
+tf.app.flags.DEFINE_boolean('use_features',config['use_features'])
+tf.app.flags.DEFINE_boolean('in_query',config['in_query'])
+tf.app.flags.DEFINE_boolean('use_stop',config['use_stop'])
+tf.app.flags.DEFINE_boolean('use_ner',config['use_ner'])
+tf.app.flags.DEFINE_boolean('use_pos',config['use_pos'])
+tf.app.flags.DEFINE_boolean('use_sentiment',config['use_sentiment'])
+tf.app.flags.DEFINE_boolean('is_aspect',config['is_aspect'])
+tf.app.flags.DEFINE_boolean('aspect_treat_as_one_hot',config['aspect_treat_as_one_hot'])
+
 
 def calc_running_avg_loss(loss, running_avg_loss, summary_writer, step, decay=0.99):
 	"""Calculate the running average loss via exponential decay.
@@ -326,11 +337,16 @@ def main(unused_argv):
 		raise Exception("The single_pass flag should only be True in decode mode")
 
 	# Make a namedtuple hps, containing the values of the hyperparameters that the model needs
-	hparam_list = ['mode', 'lr', 'adagrad_init_acc', 'rand_unif_init_mag', 'trunc_norm_init_std', 'max_grad_norm', 'hidden_dim', 'emb_dim', 'batch_size', 'max_dec_steps', 'max_enc_steps','max_que_steps', 'coverage', 'cov_loss_wt', 'pointer_gen']
+	hparam_list = ['mode', 'lr', 'adagrad_init_acc', 'rand_unif_init_mag', 'trunc_norm_init_std', 'max_grad_norm', 'hidden_dim', 'emb_dim', 'batch_size', 'max_dec_steps', 
+	'max_enc_steps','max_que_steps', 'coverage', 'cov_loss_wt', 'pointer_gen','use_features','in_query','use_stop','use_pos','use_ner','use_sentiment', 'is_aspect','aspect_treat_as_one_hot']
 	hps_dict = {}
 	for key,val in FLAGS.__flags.iteritems(): # for each flag
 		if key in hparam_list: # if it's in the list
 			hps_dict[key] = val # add it to the dict
+	
+	if FLAGS.use_features:		
+		hps_dict['feature_dict'] = build_feature_dict(feature_meta,config)
+	
 	hps = namedtuple("HParams", hps_dict.keys())(**hps_dict)
 
 	# Create a batcher object that will create minibatches of data

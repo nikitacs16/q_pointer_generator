@@ -309,3 +309,74 @@ def show_abs_oovs(abstract, vocab, article_oovs):
 			new_words.append(w)
 	out_str = ' '.join(new_words)
 	return out_str
+
+def features2vector(example_features,hps): 
+	feature_dict = hps.feature_dict
+	feature_vector = np.zeros((len(example_features['tokens']), len(feature_dict)))
+	if hps.use_stop:
+		for k,w in enumerate(example_features['stop']):
+			feature_vector[k][feature_dict['stop']] = w
+	
+	if hps.use_pos: 
+		for k,w in enumerate(example_features['pos']):
+			feature_vector[k][feature_dict[w]] = 1.0
+	
+	if hps.in_query:
+		for k,w in enumerate(example_features['in_query']):
+			feature_vector[k][feature_dict['in_query']] = w
+
+	if hps.use_ner:
+		for k,w in enumerate(example_features['ner']):
+			feature_vector[k][feature_dict[w]] = 1.0
+	
+	if hps.is_aspect:
+		for k,w in enumerate(example_features['is_aspect']):
+			feature_vector[k][feature_dict['is_aspect']] = w
+			
+	if hps.aspect_as_one_hot:
+		for k,w in enumerate(example_features['aspect_list']):
+			feature_vector[k][feature_dict[w]] = 1.0
+	
+	if hps.use_sentiment:
+		for k,w in enumerate(example_features['sentiment']):
+			feature_vector[k][feature_dict['sentiment']] = w
+
+	return feature_vector		
+
+def build_feature_dict(feature_meta,args): #works at sentence level #borrowed from 
+	"""Just builds the dictionary of features specified by the user. Note this is simple collection of features. This is one-time use function"""
+	#note args comes directly from 
+	def _insert(feature):
+		if feature not in feature_dict:
+			feature_dict[feature] = len(feature_dict) #basically gives poistion in the dict
+
+	feature_dict = {}
+
+	
+	if args['in_query']:
+		_insert('in_query')
+
+	if args['use_pos']: #will create
+		for pos in feature_meta['pos']: #should be a string
+			_insert(pos)
+
+	# Named entity tag features
+	if args['use_ner']:
+		for ner in feature_meta['ner']: #should be a string
+			_insert(ner)
+
+	if args['use_sentiment']:
+		_insert('sentiment')
+	
+	if args['is_aspect']:
+		_insert('is_aspect')
+	
+	if args['use_stop']:
+		_insert('use_stop')	
+
+	if args['aspect_treat_as_one_hot']:
+		for aspect in feature_meta['aspect']: #should be a string
+			_insert(aspect)
+	
+	return feature_dict
+

@@ -23,12 +23,12 @@ import time
 import numpy as np
 import tensorflow as tf
 import data
-
+from word_level_features get *
 
 class Example(object):
 	"""Class representing a train/val/test example for text summarization."""
 
-	def __init__(self, article, query,abstract_sentences, vocab, hps):
+	def __init__(self, article, query,abstract_sentences, vocab, hps, query_short=None, imdb_id=None):
 		"""Initializes the Example, performing tokenization and truncation to produce the encoder, decoder and target sequences, which are stored in self.
 
 		Args:
@@ -44,19 +44,24 @@ class Example(object):
 		stop_decoding = vocab.word2id(data.STOP_DECODING)
 
 		# Process the article
-		article_words = article.split()
+		#article_words = article.split()
+		article_words = get_tokens(article)
 		if len(article_words) > hps.max_enc_steps:
 			article_words = article_words[:hps.max_enc_steps]
 		self.enc_len = len(article_words) # store the length after truncation but before padding
 		self.enc_input = [vocab.word2id(w) for w in article_words] # list of word ids; OOVs are represented by the id for UNK token
 
 		# Process the query
-		query_words = query.split()
+		#query_words = query.split()
+		query_words = get_tokens(query)
 		if len(query_words) > hps.max_que_steps:
 			query_words = article_words[len(query_words)- hps.max_que_steps:]
 		self.que_len = len(query_words) # store the length after truncation but before padding
 		self.que_input = [vocab.word2id(w) for w in query_words] # list of word ids; OOVs are represented by the id for UNK token
 
+		if self.hps.use_features:
+			self.enc_features = data.features2vector(get_document_word_features(query_short,article,imdb_id))
+			self.que_features = data.feature2vector(get_context_word_features(query,query_short,article,imdb_id))
 
 
 		# Process the abstract
@@ -84,6 +89,7 @@ class Example(object):
 		self.original_query = query
 		self.original_abstract = abstract
 		self.original_abstract_sents = abstract_sentences
+		self.original_imdb_id = imdb_id
 
 
 	def get_dec_inp_targ_seqs(self, sequence, max_len, start_id, stop_id):
@@ -131,7 +137,18 @@ class Example(object):
 		while len(self.que_input) < max_len:
 			self.que_input.append(pad_id)
 		
+	def pad_query_feature_vector(self,max_len,feature_len):
+		diff = max_len - len(self.que_features)
+		if diff > 0:
+			diff_zeros = np.zeros((diff,feature_len))
+			self.que_features = np.concatenate([self.que_features,diff_zeros],axis=0)
 
+	def pad_enc_feature_vector(self,max_len,feature_len):
+		diff = max_len - len(self.que_features)
+		if diff > 0:
+			diff_zeros = np.zeros((diff,feature_len))
+			self.enc_features = np.concatenate([self.enc_features,diff_zeros],axis=0)
+			
 class Batch(object):
 	"""Class representing a minibatch of train/val/test examples for text summarization."""
 
@@ -179,12 +196,20 @@ class Batch(object):
 		self.enc_lens = np.zeros((hps.batch_size), dtype=np.int32)
 		self.enc_padding_mask = np.zeros((hps.batch_size, max_enc_seq_len), dtype=np.float32)
 
+		if hps.use_features:
+			self.enc_feature_batch = np.zeros((hps.batch_size, max_enc_seq_len, len(hps.feature_dict)))	
+			for ex in example_list:
+				ex.pad_enc_feature_vector(max_enc_seq_len, len(hps.feature_dict))
+			for i, ex in enumerate(example_list):
+				self.enc_feature_batch[i:,] =ex.enc_features[:]
+
 		# Fill in the numpy arrays
 		for i, ex in enumerate(example_list):
 			self.enc_batch[i, :] = ex.enc_input[:]
 			self.enc_lens[i] = ex.enc_len
 			for j in xrange(ex.enc_len):
 				self.enc_padding_mask[i][j] = 1
+		
 
 		# For pointer-generator mode, need to store some extra info
 		if hps.pointer_gen:
@@ -230,6 +255,17 @@ class Batch(object):
 			for j in xrange(ex.que_len):
 				self.que_padding_mask[i][j] = 1
 
+
+
+		if hps.use_features:
+			self.que_feature_batch = np.zeros((hps.batch_size, max_que_seq_len, len(hps.feature_dict)))	
+			#pad 
+			for ex in example_list:
+				ex.pad_query_feature_vector(max_que_seq_len, len(hps.feature_dict))
+			#fill in numpy array
+			for i, ex in enumerate(example_list):
+				self.que_feature_batch[i:,] =ex.que_features[:]
+		
 		
 
 
@@ -265,7 +301,7 @@ class Batch(object):
 		self.original_queries = [ex.original_query for ex in example_list] # list of lists
 		self.original_abstracts = [ex.original_abstract for ex in example_list] # list of lists
 		self.original_abstracts_sents = [ex.original_abstract_sents for ex in example_list] # list of list of lists
-
+		
 
 class Batcher(object):
 	"""A class to generate minibatches of data. Buckets examples together based on length of the encoder sequence."""
@@ -345,7 +381,10 @@ class Batcher(object):
 
 		while True:
 			try:
-				(article, query, abstract) = input_gen.next() # read the next example from file. article and abstract are both strings.
+				if hps.use_features:
+					(article, query, query_short, abstract, imdb_id) = input_gen.next() # read the next example from file. article and abstract are both strings.
+				else:
+					(article,query,abstract) = input_gen.next()	
 			except StopIteration: # if there are no more examples:
 				tf.logging.info("The example generator for this example queue filling thread has exhausted data.")
 				if self._single_pass:
@@ -356,7 +395,11 @@ class Batcher(object):
 					raise Exception("single_pass mode is off but the example generator is out of data; error.")
 
 			abstract_sentences = [sent.strip() for sent in data.abstract2sents(abstract)] # Use the <s> and </s> tags in abstract to get a list of sentences.
-			example = Example(article, query, abstract_sentences, self._vocab, self._hps) # Process into an Example.
+			if self._hps.use_features:
+				example = Example(article, query, abstract_sentences, self._vocab, self._hps, query_short, imdb_id) # Process into an Example.
+			else:
+				example = Example(article,query,abstract_sentences,self._vocab,self._hps)
+
 			self._example_queue.put(example) # place the Example in the example queue.
 
 
@@ -413,17 +456,25 @@ class Batcher(object):
 
 		Args:
 			example_generator: a generator of tf.Examples from file. See data.example_generator"""
+		extra_data = False
 		while True:
 			e = example_generator.next() # e is a tf.Example
 			try:
-				article_text = e.features.feature['article'].bytes_list.value[0] # the article text was saved under the key 'article' in the data files
-				abstract_text = e.features.feature['abstract'].bytes_list.value[0] # the abstract text was saved under the key 'abstract' in the data files
-				query_text = e.features.feature['query'].bytes_list.value[0] # the abstract text was saved under the key 'abstract' in the data files
-			
+				article_text = e.features.feature['document'].bytes_list.value[0] # document text
+				abstract_text = e.features.feature['response'].bytes_list.value[0] # response text
+				query_text = e.features.feature['context'].bytes_list.value[0] # context text
+				if 'query' in e.features.feature:
+					query_short_text = e.featues.feature['query'].bytes_list.value[0] #query text
+					imdb_id_text = e.features.feature['imdb_id'].bytes_list.value[0] #imdb id about the movie being talked about	
+					extra_data = True
 			except ValueError:
 				tf.logging.error('Failed to get article or abstract from example')
 				continue
 			if len(article_text)==0: # See https://github.com/abisee/pointer-generator/issues/1
 				tf.logging.warning('Found an example with empty article text. Skipping it.')
 			else:
-				yield (article_text, query_text, abstract_text)
+				if extra_data:
+					yield (article_text, query_text, query_short_text, abstract_text, imdb_id_text)
+				else:
+					yield (article_text, query_text, abstract_text)
+
