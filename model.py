@@ -31,6 +31,7 @@ class SummarizationModel(object):
 	def __init__(self, hps, vocab):
 		self._hps = hps
 		self._vocab = vocab
+		print(hps.use_features)
 
 	def _add_placeholders(self):
 		"""Add placeholders to the graph. These are entry points for any input data."""
@@ -58,9 +59,10 @@ class SummarizationModel(object):
 		if hps.mode=="decode" and hps.coverage:
 			self.prev_coverage = tf.placeholder(tf.float32, [hps.batch_size, None], name='prev_coverage')
 			self.prev_q_coverage = tf.placeholder(tf.float32, [hps.batch_size, None], name='prev_q_coverage')
-		if hps.use_features:
-			self._que_features = tf.placeholder(tf.float32,[hps.batch_size, None], name='que_featues')
-			self._enc_features = tf.placeholder(tf.float32,[hps.batch_size, None], name='enc_features')
+		if self._hps.use_features:
+			fw_len = len(hps.feature_dict.keys())
+			self._que_features = tf.placeholder(tf.float32,[hps.batch_size, None, fw_len], name='que_featues')
+			self._enc_features = tf.placeholder(tf.float32,[hps.batch_size, None, fw_len], name='enc_features')
 
 	def _make_feed_dict(self, batch, just_enc=False):
 		"""Make a feed dictionary mapping parts of the batch to the appropriate placeholders.
@@ -86,7 +88,7 @@ class SummarizationModel(object):
 			feed_dict[self._target_batch] = batch.target_batch
 			feed_dict[self._dec_padding_mask] = batch.dec_padding_mask
 		
-		if FLAGS.use_features:
+		if self._hps.use_features:
 			feed_dict[self._enc_features] = batch.enc_feature_batch
 			feed_dict[self._que_features] = batch.que_feature_batch
 
@@ -255,7 +257,9 @@ class SummarizationModel(object):
 				emb_enc_inputs = tf.nn.embedding_lookup(embedding, self._enc_batch) # tensor with shape (batch_size, max_enc_steps, emb_size)
 				emb_que_inputs = tf.nn.embedding_lookup(embedding, self._que_batch) # tensor with shape (batch_size, max_que_steps, emb_size)
 				
-				if hps.mode:
+				if hps.use_features:
+					print(emb_enc_inputs.get_shape().as_list())
+					print(self._enc_features.get_shape().as_list()) 
 					emb_enc_inputs = tf.concat([emb_enc_inputs,self._enc_features], axis=2)
 					emb_que_inputs = tf.concat([emb_que_inputs,self._que_features], axis=2)
 				

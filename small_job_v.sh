@@ -5,7 +5,7 @@ source /tools/config.sh
 # Activate your environment
 source activate py27
 # Change to the directory in which your code is present
-cd /storage/home/prithag/d_pointer_generator
+cd /storage/home/nikita/d_pointer_generator
 # Run the code. The -u option is used here to use unbuffered writes
 # so that output is piped to the file as and when it is produced.
 # Here, the code is the MNIST Tensorflow example.

@@ -21,15 +21,15 @@ import random
 import struct
 import csv
 from tensorflow.core.example import example_pb2
-
+import numpy as np
 # <s> and </s> are used in the data files to segment the abstracts into sentences. They don't receive vocab ids.
-SENTENCE_START = '<s>'
-SENTENCE_END = '</s>'
+SENTENCE_START = 'SOOS'
+SENTENCE_END = 'EOOS'
 
-PAD_TOKEN = '[PAD]' # This has a vocab id, which is used to pad the encoder input, decoder input and target sequence
-UNKNOWN_TOKEN = '[UNK]' # This has a vocab id, which is used to represent out-of-vocabulary words
-START_DECODING = '[START]' # This has a vocab id, which is used at the start of every decoder input sequence
-STOP_DECODING = '[STOP]' # This has a vocab id, which is used at the end of untruncated target sequences
+PAD_TOKEN = 'PAAD' # This has a vocab id, which is used to pad the encoder input, decoder input and target sequence
+UNKNOWN_TOKEN = 'UNK' # This has a vocab id, which is used to represent out-of-vocabulary words
+START_DECODING = 'STAAART' # This has a vocab id, which is used at the start of every decoder input sequence
+STOP_DECODING = 'STOPPP' # This has a vocab id, which is used at the end of untruncated target sequences
 
 # Note: none of <s>, </s>, [PAD], [UNK], [START], [STOP] should appear in the vocab file.
 
@@ -312,14 +312,20 @@ def show_abs_oovs(abstract, vocab, article_oovs):
 
 def features2vector(example_features,hps): 
 	feature_dict = hps.feature_dict
+#	print(feature_dict)
+#	print(example_features)
 	feature_vector = np.zeros((len(example_features['tokens']), len(feature_dict)))
 	if hps.use_stop:
 		for k,w in enumerate(example_features['stop']):
-			feature_vector[k][feature_dict['stop']] = w
+			feature_vector[k][feature_dict['use_stop']] = w
 	
 	if hps.use_pos: 
 		for k,w in enumerate(example_features['pos']):
-			feature_vector[k][feature_dict[w]] = 1.0
+			try:
+				feature_vector[k][feature_dict[w]] = 1.0
+			except:
+				feature_vector[k]['NOUN']  = 1.0
+				print(example_features['pos'])
 	
 	if hps.in_query:
 		for k,w in enumerate(example_features['in_query']):
@@ -327,15 +333,24 @@ def features2vector(example_features,hps):
 
 	if hps.use_ner:
 		for k,w in enumerate(example_features['ner']):
-			feature_vector[k][feature_dict[w]] = 1.0
+			try:
+				feature_vector[k][feature_dict[w]] = 1.0
+			except:
+				feature_vector[k][feature_dict['NO_NER']] = 1.0
 	
 	if hps.is_aspect:
 		for k,w in enumerate(example_features['is_aspect']):
 			feature_vector[k][feature_dict['is_aspect']] = w
 			
-	if hps.aspect_as_one_hot:
-		for k,w in enumerate(example_features['aspect_list']):
-			feature_vector[k][feature_dict[w]] = 1.0
+	if hps.aspect_treat_as_one_hot:
+		for k,w in enumerate(example_features['aspects']):
+			try:
+				feature_vector[k][feature_dict[w]] = 1.0
+			except:
+				print(w)
+				print(example_features['aspects'])
+				feature_vector[k][feature_dict['none']] = 1.0
+			
 	
 	if hps.use_sentiment:
 		for k,w in enumerate(example_features['sentiment']):
@@ -347,6 +362,7 @@ def build_feature_dict(feature_meta,args): #works at sentence level #borrowed fr
 	"""Just builds the dictionary of features specified by the user. Note this is simple collection of features. This is one-time use function"""
 	#note args comes directly from 
 	def _insert(feature):
+		print(feature)
 		if feature not in feature_dict:
 			feature_dict[feature] = len(feature_dict) #basically gives poistion in the dict
 
@@ -364,6 +380,7 @@ def build_feature_dict(feature_meta,args): #works at sentence level #borrowed fr
 	if args['use_ner']:
 		for ner in feature_meta['ner']: #should be a string
 			_insert(ner)
+
 
 	if args['use_sentiment']:
 		_insert('sentiment')

@@ -6,7 +6,7 @@ metadata:
 spec:
   securityContext:
     # You need to specify your user ID here. You can get this by running "id -u"
-    runAsUser: 1042
+    runAsUser: 1038
   volumes:
   # The following 3 entries are the NFS mounts available to you. You do not need to
   # modify them. They are for your home folder, and the shared tools and datasets
@@ -39,8 +39,8 @@ spec:
     name: lib
   # You can specify a label indicating a specific model of GPU here when you need it.
   # Leave it commented when learning how to use the cluster.
-#  nodeSelector:
-    gputype: titanx
+#   nodeSelector:
+    gputype: k80
   # This part specifies the Docker container in which your code will run.
   containers:
   - name: py # The container also has a name but it ususally doesn't matter
@@ -51,7 +51,7 @@ spec:
     # call that script like below.
     # 
     # Note that all paths have to be according to the filesystem inside the container.
-    command: ["/bin/bash", "/storage/home/prithag/d_pointer_generator/small_job.sh"]
+    command: ["/bin/bash", "/storage/home/nikita/d_pointer_generator/small_job.sh"]
     # This section specifies the resources you ask for.
     resources:
       # For the purposes of using the cluster, the "requests" section should be the
@@ -60,18 +60,18 @@ spec:
         alpha.kubernetes.io/nvidia-gpu: 1 # Number of GPUs
         # RAM can be specified in either MiB (1024x1024 bytes) (ex. "500Mi")
         # or GiB (ex. "4Gi")
-        memory: "4Gi"
-        cpu: "1" # Number of CPU cores
+        memory: "20Gi"
+        cpu: "4" # Number of CPU cores
       requests:
-        memory: "4Gi"
-        cpu: "1"
+        memory: "20Gi"
+        cpu: "4"
     # Here, you can specify where you want the above directories to be mounted
     # within the container. It is recommended to use this configuration as
     # it mirrors what is present on the master machine.
     volumeMounts:
     # Entry for your home folder. Make sure to replace <username> with your
     # username.
-    - mountPath: /storage/home/prithag
+    - mountPath: /storage/home/nikita
       name: home
     # Entry for the other folders mentioned above.
     - mountPath: /tools

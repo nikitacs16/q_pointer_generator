@@ -35,11 +35,13 @@ import json
 FLAGS = tf.app.flags.FLAGS
 tf.app.flags.DEFINE_string('config_file', 'config.yaml', 'pass the config_file through command line if new expt')
 config = yaml.load(open(FLAGS.config_file,'r'))
+#print(config['train_path'])
 tf.app.flags.DEFINE_string('mode', 'train', 'must be one of train/eval/decode')
 tf.app.flags.DEFINE_string('data_path',config['train_path'],'Default path to the chunked files')
 tf.app.flags.DEFINE_string('vocab_path', config['vocab_path'], 'Path expression to text vocabulary file.')
 tf.app.flags.DEFINE_string('feature_meta_path', config['feature_meta_path'], 'Path expression to feature meta data path.')
-feature_meta = json.load(open(FLAGS.feature_meta_path,'r'))
+#print(FLAGS.data_path)
+feature_meta = json.load(open(config['feature_meta_path'],'r'))
 tf.app.flags.DEFINE_boolean('debug', False, "Run in tensorflow's debug mode (watches for NaN/inf values)")
 tf.app.flags.DEFINE_boolean('single_pass', False, 'For decode mode only. If True, run eval on the full dataset using a fixed checkpoint, i.e. take the current checkpoint, and use it to produce one summary for each example in the dataset, write the summaries to file and then get ROUGE scores for the whole dataset. If False (default), run concurrent decoding, i.e. repeatedly load latest checkpoint, use it to produce summaries for randomly-chosen examples and log the results to screen, indefinitely.')
 tf.app.flags.DEFINE_boolean('pointer_gen', config['pointer_gen'], 'If True, use pointer-generator model. If False, use baseline model.')
@@ -71,14 +73,14 @@ tf.app.flags.DEFINE_float('max_grad_norm', config['max_grad_norm'], 'for gradien
 tf.app.flags.DEFINE_integer('max_to_keep',config['max_to_keep'] , 'maximum models to keep')
 tf.app.flags.DEFINE_integer('early_stopping_steps', config['early_stopping_steps'], 'setting up patience parameter')
 # Pointer-generator or baseline model
-tf.app.flags.DEFINE_boolean('use_features',config['use_features'])
-tf.app.flags.DEFINE_boolean('in_query',config['in_query'])
-tf.app.flags.DEFINE_boolean('use_stop',config['use_stop'])
-tf.app.flags.DEFINE_boolean('use_ner',config['use_ner'])
-tf.app.flags.DEFINE_boolean('use_pos',config['use_pos'])
-tf.app.flags.DEFINE_boolean('use_sentiment',config['use_sentiment'])
-tf.app.flags.DEFINE_boolean('is_aspect',config['is_aspect'])
-tf.app.flags.DEFINE_boolean('aspect_treat_as_one_hot',config['aspect_treat_as_one_hot'])
+tf.app.flags.DEFINE_boolean('use_features',config['use_features'],'option to use features')
+tf.app.flags.DEFINE_boolean('in_query',config['in_query'],'cross interaction between document and query')
+tf.app.flags.DEFINE_boolean('use_stop',config['use_stop'],'check for stop words')
+tf.app.flags.DEFINE_boolean('use_ner',config['use_ner'],'check for ner' )
+tf.app.flags.DEFINE_boolean('use_pos',config['use_pos'],'check for pos')
+tf.app.flags.DEFINE_boolean('use_sentiment',config['use_sentiment'],'check for sentiment')
+tf.app.flags.DEFINE_boolean('is_aspect',config['is_aspect'],'check for presence of aspect')
+tf.app.flags.DEFINE_boolean('aspect_treat_as_one_hot',config['aspect_treat_as_one_hot'],'check for type of aspect')
 
 
 def calc_running_avg_loss(loss, running_avg_loss, summary_writer, step, decay=0.99):
@@ -232,9 +234,12 @@ def check_for_early_stopping(train_step):
 	eval_dir = os.path.join(FLAGS.log_root, "eval") # make a subdir of the root dir for eval data
 	ckpt_file = open(eval_dir+'/checkpoint_best','r')
 	pattern_in_line = 'model_checkpoint_path:'
+	val_step = 0
 	for line in ckpt_file.readlines():
 		if pattern_in_line:
-			val_step = int(re.findall(r"\d{4,7}(?!\d)", line)[0])
+			x = int(re.findall(r"\d{4,7}(?!\d)",line)[0])
+			if x:
+				val_step = int(re.findall(r"\d{4,7}(?!\d)", line)[0])
 			break
 	tf.logging.info(val_step)
 	patience_steps = FLAGS.early_stopping_steps
@@ -346,7 +351,8 @@ def main(unused_argv):
 	
 	if FLAGS.use_features:		
 		hps_dict['feature_dict'] = build_feature_dict(feature_meta,config)
-	
+	print('Feature dict')
+	print(len(hps_dict['feature_dict']))		
 	hps = namedtuple("HParams", hps_dict.keys())(**hps_dict)
 
 	# Create a batcher object that will create minibatches of data

@@ -6,7 +6,7 @@ metadata:
 spec:
   securityContext:
     # You need to specify your user ID here. You can get this by running "id -u"
-    runAsUser: 1042
+    runAsUser: 1038
   volumes:
   # The following 3 entries are the NFS mounts available to you. You do not need to
   # modify them. They are for your home folder, and the shared tools and datasets
@@ -51,7 +51,7 @@ spec:
     # call that script like below.
     # 
     # Note that all paths have to be according to the filesystem inside the container.
-    command: ["/bin/bash", "/storage/home/prithag/d_pointer_generator/small_job_v.sh"]
+    command: ["/bin/bash", "/storage/home/sidarora/d_pointer_generator/small_job_v.sh"]
     # This section specifies the resources you ask for.
     resources:
       # For the purposes of using the cluster, the "requests" section should be the
@@ -71,7 +71,7 @@ spec:
     volumeMounts:
     # Entry for your home folder. Make sure to replace <username> with your
     # username.
-    - mountPath: /storage/home/prithag
+    - mountPath: /storage/home/sidarora
       name: home
     # Entry for the other folders mentioned above.
     - mountPath: /tools

@@ -1,14 +1,14 @@
 #data_paths
-train_path: '/storage/home/prithag/finished_files/chunked/train_*'
-dev_path: '/storage/home/prithag/finished_files/chunked/val_*'
-test_path: '/storage/home/prithag/finished_files/chunked/test_*'
-vocab_path: '/storage/home/prithag/finished_files/vocab'
-
+train_path: '/storage/home/nikita/oracle_reduced/finished_files/chunked/train_001*'
+dev_path: '/storage/home/nikita/oracle_reduced/chunked/val_001*'
+test_path: '/storage/home/nikita/oracle_reduced/finished_files/chunked/test_001*'
+vocab_path: '/storage/home/nikita/oracle_reduced/finished_files/vocab'
+feature_meta_path: 'feature_meta_uni.json'
 #output paths
-log_root: '/scratch/scratch1/nikita_debug/pg' #Root directory for all logging.
-exp_name: 'full_reduced_triple' #Name for experiment. Logs will be saved in a directory with this name, under log_root
+log_root: '/scratch/scratch1/nikita/pg' #Root directory for all logging.
+exp_name: 'oracle_reduced_features' #Name for experiment. Logs will be saved in a directory with this name, under log_root
 #Hyperparameters
-hidden_dim: 200 #dimension of RNN hidden states
+hidden_dim: 100 #dimension of RNN hidden states
 emb_dim: 128 #dimension of word embeddings
 batch_size: 16  #minibatch size'
 max_enc_steps: 500 #max timesteps of encoder (max source text tokens)
@@ -16,7 +16,7 @@ max_que_steps: 100 #max timesteps of query encoder (max source query tokens)
 max_dec_steps: 60 #max timesteps of decoder (max summary tokens)
 beam_size: 4  #beam size for beam search decoding.
 min_dec_steps: 3 #Minimum sequence length of generated summary. Applies only for beam search decoding mode
-vocab_size: 35000  #'Size of vocabulary. These will be read from the vocabulary file in order. If the vocabulary file contains fewer words than this number, or if this number is set to 0, will take all words in the vocabulary file.
+vocab_size: 25000  #'Size of vocabulary. These will be read from the vocabulary file in order. If the vocabulary file contains fewer words than this number, or if this number is set to 0, will take all words in the vocabulary file.
 lr: 0.15 #learning rate
 adagrad_init_acc: 0.01 #initial accumulator value for Adagrad
 rand_unif_init_mag: 0.02 #magnitude for lstm cells random uniform inititalization
@@ -34,6 +34,6 @@ in_query: True
 use_stop: True
 use_pos: True
 use_ner: True
-use_sentiment: True
+use_sentiment: False
 is_aspect: True
-aspect_treat_as_one_hot: False 
+aspect_treat_as_one_hot: True
