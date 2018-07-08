@@ -4,6 +4,10 @@ dev_path: '/storage/home/nikita/oracle_reduced/chunked/val_001*'
 test_path: '/storage/home/nikita/oracle_reduced/finished_files/chunked/test_001*'
 vocab_path: '/storage/home/nikita/oracle_reduced/finished_files/vocab'
 feature_meta_path: 'feature_meta_uni.json'
+feature_train_path: ''
+feature_dev_path: ''
+feature_test_path: ''
+
 #output paths
 log_root: '/scratch/scratch1/nikita/pg' #Root directory for all logging.
 exp_name: 'oracle_reduced_features' #Name for experiment. Logs will be saved in a directory with this name, under log_root

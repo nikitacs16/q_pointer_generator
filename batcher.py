@@ -28,7 +28,7 @@ from word_level_features import WordFeatures
 class Example(object):
 	"""Class representing a train/val/test example for text summarization."""
 
-	def __init__(self, article, query,abstract_sentences, vocab, hps, query_short=None, imdb_id=None):
+	def __init__(self, article, query, abstract_sentences, vocab, hps, example_id=None):
 		"""Initializes the Example, performing tokenization and truncation to produce the encoder, decoder and target sequences, which are stored in self.
 
 		Args:
@@ -42,7 +42,7 @@ class Example(object):
 		# Get ids of special tokens
 		start_decoding = vocab.word2id(data.START_DECODING)
 		stop_decoding = vocab.word2id(data.STOP_DECODING)
-		word_features = WordFeatures()
+		#word_features = WordFeatures()
 		# Process the article
 		article_words = article.split()
 		#article_words = word_features.get_tokens(article)
@@ -62,8 +62,9 @@ class Example(object):
 		self.que_input = [vocab.word2id(w) for w in query_words] # list of word ids; OOVs are represented by the id for UNK token
 
 		if self.hps.use_features:
-			self.enc_features = data.features2vector(word_features.get_document_word_features(query_short,article,imdb_id),hps)
-			self.que_features = data.features2vector(word_features.get_context_word_features(query,query_short,article,imdb_id),hps)
+
+			self.enc_features = hps.feature_vector_dict[example_id]['document_features']
+			self.que_features = hps.feature_vector_dict[example_id]['context_features']
 
 
 		# Process the abstract
@@ -92,7 +93,7 @@ class Example(object):
 		self.original_query = query
 		self.original_abstract = abstract
 		self.original_abstract_sents = abstract_sentences
-		self.original_imdb_id = imdb_id
+		self.original_example_id = example_id
 
 
 	def get_dec_inp_targ_seqs(self, sequence, max_len, start_id, stop_id):
@@ -203,8 +204,8 @@ class Batch(object):
 			self.enc_feature_batch = np.zeros((hps.batch_size, max_enc_seq_len, len(hps.feature_dict)))	
 			for ex in example_list:
 				ex.pad_enc_feature_vector(max_enc_seq_len, len(hps.feature_dict))
-			for i, ex in enumerate(example_list):
-				self.enc_feature_batch[i:,] =ex.enc_features[:]
+			self.enc_features_batch = tf.stack([ex.enc_features for ex in example_list])	
+
 
 		# Fill in the numpy arrays
 		for i, ex in enumerate(example_list):
@@ -266,9 +267,8 @@ class Batch(object):
 			for ex in example_list:
 				ex.pad_query_feature_vector(max_que_seq_len, len(hps.feature_dict))
 			#fill in numpy array
-			for i, ex in enumerate(example_list):
-				self.que_feature_batch[i:,] =ex.que_features[:]
-		
+			self.que_features_batch = tf.stack([ex.que_features for ex in example_list])	
+
 		
 
 
@@ -385,7 +385,7 @@ class Batcher(object):
 		while True:
 			try:
 				if self._hps.use_features:
-					(article, query, query_short, abstract, imdb_id) = input_gen.next() # read the next example from file. article and abstract are both strings.
+					(article, query, abstract, example_id) = input_gen.next() # read the next example from file. article and abstract are both strings.
 				else:
 					(article,query,abstract) = input_gen.next()	
 			except StopIteration: # if there are no more examples:
@@ -399,7 +399,7 @@ class Batcher(object):
 
 			abstract_sentences = [sent.strip() for sent in data.abstract2sents(abstract)] # Use the <s> and </s> tags in abstract to get a list of sentences.
 			if self._hps.use_features:
-				example = Example(article, query, abstract_sentences, self._vocab, self._hps, query_short, imdb_id) # Process into an Example.
+				example = Example(article, query, abstract_sentences, self._vocab, self._hps, example_id) # Process into an Example.
 			else:
 				example = Example(article,query,abstract_sentences,self._vocab,self._hps)
 
@@ -467,9 +467,7 @@ class Batcher(object):
 				abstract_text = e.features.feature['response'].bytes_list.value[0] # response text
 				query_text = e.features.feature['context'].bytes_list.value[0] # context text
 				if self._hps.use_features:
-					query_short_text = e.features.feature['query'].bytes_list.value[0] #query text
-					imdb_id_text = e.features.feature['imdb_id'].bytes_list.value[0] #imdb id about the movie being talked about	
-					extra_data = True
+					example_id_text = e.features.feature['example_id'].bytes_list.value[0] #example id about the movie being talked about	
 				#print(query_text)
 			except ValueError:
 				tf.logging.error('Failed to get article or abstract from example')
@@ -478,7 +476,7 @@ class Batcher(object):
 				tf.logging.warning('Found an example with empty article text. Skipping it.')
 			else:
 				if self._hps.use_features:
-					yield (article_text, query_text, query_short_text, abstract_text, imdb_id_text)
+					yield (article_text, query_text, query_short_text, abstract_text, example_id_text)
 				else:
 					yield (article_text, query_text, abstract_text)
 

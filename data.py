@@ -22,6 +22,7 @@ import struct
 import csv
 from tensorflow.core.example import example_pb2
 import numpy as np
+import time
 # <s> and </s> are used in the data files to segment the abstracts into sentences. They don't receive vocab ids.
 SENTENCE_START = 'SOOS'
 SENTENCE_END = 'EOOS'
@@ -310,17 +311,20 @@ def show_abs_oovs(abstract, vocab, article_oovs):
 	out_str = ' '.join(new_words)
 	return out_str
 
-def features2vector(example_features,hps): 
+def features2vector(example_features, hps, len_limit): 
 	feature_dict = hps.feature_dict
+	len_words = len(example_features['stop'])
+	if len_words < len_limit:
+		len_limit = len_words
 #	print(feature_dict)
 #	print(example_features)
-	feature_vector = np.zeros((len(example_features['tokens']), len(feature_dict)))
+	feature_vector = np.zeros((len_limit, len(feature_dict)))
 	if hps.use_stop:
-		for k,w in enumerate(example_features['stop']):
+		for k,w in enumerate(example_features['stop'][0:len_limit]):
 			feature_vector[k][feature_dict['use_stop']] = w
 	
 	if hps.use_pos: 
-		for k,w in enumerate(example_features['pos']):
+		for k,w in enumerate(example_features['pos'][0:len_limit]):
 			try:
 				feature_vector[k][feature_dict[w]] = 1.0
 			except:
@@ -328,22 +332,22 @@ def features2vector(example_features,hps):
 				print(example_features['pos'])
 	
 	if hps.in_query:
-		for k,w in enumerate(example_features['in_query']):
+		for k,w in enumerate(example_features['in_query'][0:len_limit]):
 			feature_vector[k][feature_dict['in_query']] = w
 
 	if hps.use_ner:
-		for k,w in enumerate(example_features['ner']):
+		for k,w in enumerate(example_features['ner'][0:len_limit]):
 			try:
 				feature_vector[k][feature_dict[w]] = 1.0
 			except:
 				feature_vector[k][feature_dict['NO_NER']] = 1.0
 	
 	if hps.is_aspect:
-		for k,w in enumerate(example_features['is_aspect']):
+		for k,w in enumerate(example_features['is_aspect'][0:len_limit]):
 			feature_vector[k][feature_dict['is_aspect']] = w
 			
 	if hps.aspect_treat_as_one_hot:
-		for k,w in enumerate(example_features['aspects']):
+		for k,w in enumerate(example_features['aspects'][0:len_limit]):
 			try:
 				feature_vector[k][feature_dict[w]] = 1.0
 			except:
@@ -353,7 +357,7 @@ def features2vector(example_features,hps):
 			
 	
 	if hps.use_sentiment:
-		for k,w in enumerate(example_features['sentiment']):
+		for k,w in enumerate(example_features['sentiment'][0:len_limit]):
 			feature_vector[k][feature_dict['sentiment']] = w
 
 	return feature_vector		
@@ -362,7 +366,6 @@ def build_feature_dict(feature_meta,args): #works at sentence level #borrowed fr
 	"""Just builds the dictionary of features specified by the user. Note this is simple collection of features. This is one-time use function"""
 	#note args comes directly from 
 	def _insert(feature):
-		print(feature)
 		if feature not in feature_dict:
 			feature_dict[feature] = len(feature_dict) #basically gives poistion in the dict
 
@@ -396,4 +399,27 @@ def build_feature_dict(feature_meta,args): #works at sentence level #borrowed fr
 			_insert(aspect)
 	
 	return feature_dict
+
+def build_features_to_vector(hps):
+	t0 = time.time()
+	if hps.mode=='train'
+		feature_files_path = hps.feature_train_path
+	elif hps.mode == 'eval'
+		feature_files_path = hps.feature_dev_path
+	elif hps.mode == 'decode'
+		feature_files_path = hps.feature_dev_path
+	else:
+		raise ValueError("The 'mode' flag must be one of train/eval/decode")	
+	feature_vector_dict = {}
+	feature_files = glob.glob(feature_files_path)
+	
+	for feature_file in feature_files:
+		loaded_features = json.load(open(feature_file,'r'))
+		for i in features_dumped:
+			feature_vector_dict[i]['document_features'] = features2vector(loaded_features[i]['document_features'],hps,hps.max_enc_steps) 
+			feature_vector_dict[i]['context_features'] = features2vector(loaded_features[i]['context_features'],hps,hps.max_que_steps) 
+	t1 = time.time()
+	print('Time to build features2vector: %i seconds', t1 - t0)
+	return feature_vector_dict		
+		
 

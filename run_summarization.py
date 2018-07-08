@@ -22,7 +22,7 @@ import os
 import tensorflow as tf
 import numpy as np
 from collections import namedtuple
-from data import Vocab, build_feature_dict
+from data import Vocab, build_feature_dict, build_
 from batcher import Batcher
 from model import SummarizationModel
 from decode import BeamSearchDecoder
@@ -351,9 +351,11 @@ def main(unused_argv):
 	
 	if FLAGS.use_features:		
 		hps_dict['feature_dict'] = build_feature_dict(feature_meta,config)
-	print('Feature dict')
-	print(len(hps_dict['feature_dict']))		
+			
 	hps = namedtuple("HParams", hps_dict.keys())(**hps_dict)
+	if FLAGS.use_features:
+		hps_dict['feature_vector_dict'] = build_features_to_vector(hps)
+		hps = namedtuple("HParams", hps_dict.keys())(**hps_dict)
 
 	# Create a batcher object that will create minibatches of data
 	batcher = Batcher(FLAGS.data_path, vocab, hps, single_pass=FLAGS.single_pass)
