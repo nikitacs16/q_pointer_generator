@@ -215,8 +215,11 @@ class Batch(object):
 			self.enc_feature_batch = np.zeros((hps.batch_size, max_enc_seq_len, len(hps.feature_dict)))	
 			for ex in example_list:
 				ex.pad_enc_feature_vector(max_enc_seq_len, len(hps.feature_dict))
-			self.enc_features_batch = tf.stack([ex.enc_features for ex in example_list])	
-
+			try:
+				self.enc_features_batch = tf.stack([ex.enc_features for ex in example_list])	
+			except:
+				w = [ex.example_id for ex in example_list]
+				tf.logging.info(w)	
 
 		# Fill in the numpy arrays
 		for i, ex in enumerate(example_list):
@@ -281,6 +284,8 @@ class Batch(object):
 			try:
 				self.que_features_batch = tf.stack([ex.que_features for ex in example_list])	
 			except:
+				w = [ex.example_id for ex in example_list]
+				tf.logging.info(w)
 					
 		
 
