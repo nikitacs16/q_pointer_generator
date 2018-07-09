@@ -52,7 +52,7 @@ class Example(object):
 			article = " ".join(a for a in article_words)
 		self.enc_len = len(article_words) # store the length after truncation but before padding
 		self.enc_input = [vocab.word2id(w) for w in article_words] # list of word ids; OOVs are represented by the id for UNK token
-
+		self.example_id = example_id
 		# Process the query
 		query_words = query.split()
 		#query_words = word_features.get_tokens(query)
@@ -278,8 +278,10 @@ class Batch(object):
 			for ex in example_list:
 				ex.pad_query_feature_vector(max_que_seq_len, len(hps.feature_dict))
 			#fill in numpy array
-			self.que_features_batch = tf.stack([ex.que_features for ex in example_list])	
-
+			try:
+				self.que_features_batch = tf.stack([ex.que_features for ex in example_list])	
+			except:
+					
 		
 
 

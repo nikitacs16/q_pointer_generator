@@ -313,20 +313,32 @@ def show_abs_oovs(abstract, vocab, article_oovs):
 	out_str = ' '.join(new_words)
 	return out_str
 
-def features2vector(example_features, hps, len_limit): 
+def features2vector(example_features, hps, len_limit,flag): 
 	feature_dict = hps.feature_dict
 	len_words = len(example_features['stop'])
-	if len_words < len_limit:
-		len_limit = len_words
+	if flag:
+		start = 0
+		if len_words< len_limit:
+			end = len_words
+		else:
+			end = len_limit
+	else:
+		if len_words < len_limit:
+			start = 0
+			end = len_words
+		else:
+			start = len_words - len_limit
+			end = len_words
+
 #	print(feature_dict)
 #	print(example_features)
 	feature_vector = np.zeros((len_limit, len(feature_dict)))
 	if hps.use_stop:
-		for k,w in enumerate(example_features['stop'][0:len_limit]):
+		for k,w in enumerate(example_features['stop'][start:end]):
 			feature_vector[k][feature_dict['use_stop']] = w
 	
 	if hps.use_pos: 
-		for k,w in enumerate(example_features['pos'][0:len_limit]):
+		for k,w in enumerate(example_features['pos'][start:end]):
 			try:
 				feature_vector[k][feature_dict[w]] = 1.0
 			except:
@@ -334,22 +346,22 @@ def features2vector(example_features, hps, len_limit):
 				print(example_features['pos'])
 	
 	if hps.in_query:
-		for k,w in enumerate(example_features['in_query'][0:len_limit]):
+		for k,w in enumerate(example_features['in_query'][start:end]):
 			feature_vector[k][feature_dict['in_query']] = w
 
 	if hps.use_ner:
-		for k,w in enumerate(example_features['ner'][0:len_limit]):
+		for k,w in enumerate(example_features['ner'][start:end]):
 			try:
 				feature_vector[k][feature_dict[w]] = 1.0
 			except:
 				feature_vector[k][feature_dict['NO_NER']] = 1.0
 	
 	if hps.is_aspect:
-		for k,w in enumerate(example_features['is_aspect'][0:len_limit]):
+		for k,w in enumerate(example_features['is_aspect'][start:end]):
 			feature_vector[k][feature_dict['is_aspect']] = w
 			
 	if hps.aspect_treat_as_one_hot:
-		for k,w in enumerate(example_features['aspects'][0:len_limit]):
+		for k,w in enumerate(example_features['aspects'][start:end]):
 			try:
 				feature_vector[k][feature_dict[w]] = 1.0
 			except:
@@ -359,7 +371,7 @@ def features2vector(example_features, hps, len_limit):
 			
 	
 	if hps.use_sentiment:
-		for k,w in enumerate(example_features['sentiment'][0:len_limit]):
+		for k,w in enumerate(example_features['sentiment'][start:end]):
 			feature_vector[k][feature_dict['sentiment']] = w
 
 	return feature_vector		
@@ -421,8 +433,8 @@ def build_features_to_vector(hps):
 		loaded_features = pickle.load(open(feature_file,'rb'))
 		feature_keys = list(loaded_features.keys())
 		for i in feature_keys:
-			document_features = features2vector(loaded_features[i]['document_features'],hps,hps.max_enc_steps) 
-			context_features = features2vector(loaded_features[i]['context_featues'],hps,hps.max_que_steps)
+			document_features = features2vector(loaded_features[i]['document_features'],hps,hps.max_enc_steps,flag=True) 
+			context_features = features2vector(loaded_features[i]['context_featues'],hps,hps.max_que_steps,flag=False)
 			feature_vector_dict[i] = {'document_features':document_features,'context_features':context_features} 
 	t1 = time.time()
 	tf.logging.info('Time to build features2vector: %i seconds', t1 - t0)
