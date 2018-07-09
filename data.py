@@ -23,6 +23,8 @@ import csv
 from tensorflow.core.example import example_pb2
 import numpy as np
 import time
+import pickle
+import tensorflow as tf
 # <s> and </s> are used in the data files to segment the abstracts into sentences. They don't receive vocab ids.
 SENTENCE_START = 'SOOS'
 SENTENCE_END = 'EOOS'
@@ -402,24 +404,28 @@ def build_feature_dict(feature_meta,args): #works at sentence level #borrowed fr
 
 def build_features_to_vector(hps):
 	t0 = time.time()
-	if hps.mode=='train'
+	if hps.mode=='train':
 		feature_files_path = hps.feature_train_path
-	elif hps.mode == 'eval'
+	elif hps.mode == 'eval':
 		feature_files_path = hps.feature_dev_path
-	elif hps.mode == 'decode'
-		feature_files_path = hps.feature_dev_path
+	elif hps.mode == 'decode':
+		feature_files_path = hps.feature_test_path
 	else:
 		raise ValueError("The 'mode' flag must be one of train/eval/decode")	
 	feature_vector_dict = {}
 	feature_files = glob.glob(feature_files_path)
-	
+	#print(hps.feature_train_path)
+	#print(feature_files)
 	for feature_file in feature_files:
-		loaded_features = json.load(open(feature_file,'r'))
-		for i in features_dumped:
-			feature_vector_dict[i]['document_features'] = features2vector(loaded_features[i]['document_features'],hps,hps.max_enc_steps) 
-			feature_vector_dict[i]['context_features'] = features2vector(loaded_features[i]['context_features'],hps,hps.max_que_steps) 
+		tf.logging.info(feature_file)
+		loaded_features = pickle.load(open(feature_file,'rb'))
+		feature_keys = list(loaded_features.keys())
+		for i in feature_keys:
+			document_features = features2vector(loaded_features[i]['document_features'],hps,hps.max_enc_steps) 
+			context_features = features2vector(loaded_features[i]['context_featues'],hps,hps.max_que_steps)
+			feature_vector_dict[i] = {'document_features':document_features,'context_features':context_features} 
 	t1 = time.time()
-	print('Time to build features2vector: %i seconds', t1 - t0)
+	tf.logging.info('Time to build features2vector: %i seconds', t1 - t0)
 	return feature_vector_dict		
 		
 

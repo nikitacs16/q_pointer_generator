@@ -51,7 +51,7 @@ spec:
     # call that script like below.
     # 
     # Note that all paths have to be according to the filesystem inside the container.
-    command: ["/bin/bash", "/storage/home/sidarora/d_pointer_generator/small_job_v.sh"]
+    command: ["/bin/bash", "/storage/home/nikita/d_pointer_generator/small_job_v.sh"]
     # This section specifies the resources you ask for.
     resources:
       # For the purposes of using the cluster, the "requests" section should be the
@@ -71,7 +71,7 @@ spec:
     volumeMounts:
     # Entry for your home folder. Make sure to replace <username> with your
     # username.
-    - mountPath: /storage/home/sidarora
+    - mountPath: /storage/home/nikita
       name: home
     # Entry for the other folders mentioned above.
     - mountPath: /tools

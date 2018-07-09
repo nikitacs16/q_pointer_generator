@@ -1,4 +1,3 @@
-
 # Copyright 2016 The TensorFlow Authors. All Rights Reserved.
 # Modifications Copyright 2017 Abigail See
 #
@@ -97,12 +96,9 @@ class Example(object):
 		self.original_example_id = example_id
 	def check_if_features_are_equal(self):
 		if len(self.que_features) == self.que_len and len(self.enc_features) == self.enc_len:
-			#tf.logging.info("QUe len Que F len %d\t%d"%(self.que_len,len(self.que_features)))
-			#tf.logging.info(self.que_len)
-			#tf.logging.info('******')
 			return True
-		tf.logging.info("QUe len Que F len %d\t%d"%(self.que_len,len(self.que_features)))
-
+		tf.logging(len(self.que_features))
+		tf.logging(self.x
 		return False
 
 	def get_dec_inp_targ_seqs(self, sequence, max_len, start_id, stop_id):
@@ -162,7 +158,7 @@ class Example(object):
 		if diff > 0:
 			diff_zeros = np.zeros((diff,feature_len))
 			self.enc_features = np.concatenate([self.enc_features,diff_zeros],axis=0)
-			#tf.logging.info(diff)
+			tf.logging.info(diff)
 			
 class Batch(object):
 	"""Class representing a minibatch of train/val/test examples for text summarization."""
@@ -411,9 +407,9 @@ class Batcher(object):
 			abstract_sentences = [sent.strip() for sent in data.abstract2sents(abstract)] # Use the <s> and </s> tags in abstract to get a list of sentences.
 			if self._hps.use_features:
 				example = Example(article, query, abstract_sentences, self._vocab, self._hps, example_id) # Process into an Example.
-				#if not example.check_if_features_are_equal():
-				#	tf.logging.info(example_id)
-				#	continue
+				if not example.check_if_features_are_equal():
+					tf.logging.info(example_id)
+					continue
 			else:
 				example = Example(article,query,abstract_sentences,self._vocab,self._hps)
 			

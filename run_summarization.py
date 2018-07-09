@@ -22,7 +22,7 @@ import os
 import tensorflow as tf
 import numpy as np
 from collections import namedtuple
-from data import Vocab, build_feature_dict, build_
+from data import Vocab, build_feature_dict, build_features_to_vector
 from batcher import Batcher
 from model import SummarizationModel
 from decode import BeamSearchDecoder
@@ -40,6 +40,10 @@ tf.app.flags.DEFINE_string('mode', 'train', 'must be one of train/eval/decode')
 tf.app.flags.DEFINE_string('data_path',config['train_path'],'Default path to the chunked files')
 tf.app.flags.DEFINE_string('vocab_path', config['vocab_path'], 'Path expression to text vocabulary file.')
 tf.app.flags.DEFINE_string('feature_meta_path', config['feature_meta_path'], 'Path expression to feature meta data path.')
+tf.app.flags.DEFINE_string('feature_train_path', config['feature_train_path'], 'Path expression to feature for train data path.')
+tf.app.flags.DEFINE_string('feature_dev_path', config['feature_dev_path'], 'Path expression to feature for dev data path.')
+tf.app.flags.DEFINE_string('feature_test_path', config['feature_test_path'], 'Path expression to feature for test data path.')
+
 #print(FLAGS.data_path)
 feature_meta = json.load(open(config['feature_meta_path'],'r'))
 tf.app.flags.DEFINE_boolean('debug', False, "Run in tensorflow's debug mode (watches for NaN/inf values)")
@@ -237,9 +241,9 @@ def check_for_early_stopping(train_step):
 	val_step = 0
 	for line in ckpt_file.readlines():
 		if pattern_in_line:
-			x = int(re.findall(r"\d{4,7}(?!\d)",line)[0])
+			x = re.findall(r"\d{4,7}(?!\d)",line)
 			if x:
-				val_step = int(re.findall(r"\d{4,7}(?!\d)", line)[0])
+				val_step = int(x[0])
 			break
 	tf.logging.info(val_step)
 	patience_steps = FLAGS.early_stopping_steps
@@ -343,7 +347,7 @@ def main(unused_argv):
 
 	# Make a namedtuple hps, containing the values of the hyperparameters that the model needs
 	hparam_list = ['mode', 'lr', 'adagrad_init_acc', 'rand_unif_init_mag', 'trunc_norm_init_std', 'max_grad_norm', 'hidden_dim', 'emb_dim', 'batch_size', 'max_dec_steps', 
-	'max_enc_steps','max_que_steps', 'coverage', 'cov_loss_wt', 'pointer_gen','use_features','in_query','use_stop','use_pos','use_ner','use_sentiment', 'is_aspect','aspect_treat_as_one_hot']
+	'max_enc_steps','max_que_steps', 'coverage', 'cov_loss_wt', 'pointer_gen','use_features','in_query','use_stop','use_pos','use_ner','use_sentiment', 'is_aspect','aspect_treat_as_one_hot','feature_train_path','feature_dev_path','feature_test_path']
 	hps_dict = {}
 	for key,val in FLAGS.__flags.iteritems(): # for each flag
 		if key in hparam_list: # if it's in the list
@@ -354,6 +358,7 @@ def main(unused_argv):
 			
 	hps = namedtuple("HParams", hps_dict.keys())(**hps_dict)
 	if FLAGS.use_features:
+		print('Reached here')
 		hps_dict['feature_vector_dict'] = build_features_to_vector(hps)
 		hps = namedtuple("HParams", hps_dict.keys())(**hps_dict)
 
@@ -361,7 +366,7 @@ def main(unused_argv):
 	batcher = Batcher(FLAGS.data_path, vocab, hps, single_pass=FLAGS.single_pass)
 
 	tf.set_random_seed(111) # a seed value for randomness
-
+	
 	if hps.mode == 'train':
 		print "creating model..."
 		model = SummarizationModel(hps, vocab)
@@ -383,6 +388,7 @@ def main(unused_argv):
 		setup_training(model, batcher)
 	else:
 		raise ValueError("The 'mode' flag must be one of train/eval/decode")
+	
 
 if __name__ == '__main__':
 	tf.app.run()

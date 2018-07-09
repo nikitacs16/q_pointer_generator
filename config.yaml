@@ -1,12 +1,12 @@
 #data_paths
-train_path: '/storage/home/nikita/oracle_reduced/finished_files/chunked/train_001*'
-dev_path: '/storage/home/nikita/oracle_reduced/chunked/val_001*'
-test_path: '/storage/home/nikita/oracle_reduced/finished_files/chunked/test_001*'
-vocab_path: '/storage/home/nikita/oracle_reduced/finished_files/vocab'
+train_path: '/scratch/scratch1/nikita/data/oracle_reduced/finished_files/chunked/train_*'
+dev_path: '/scratch/scratch1/nikita/data/oracle_reduced/finished_files/chunked/val_*'
+test_path: '/scratch/scratch1/nikita/data/oracle_reduced/finished_files/chunked/test_*'
+vocab_path: '/scratch/scratch1/nikita/data/oracle_reduced/finished_files/vocab'
 feature_meta_path: 'feature_meta_uni.json'
-feature_train_path: ''
-feature_dev_path: ''
-feature_test_path: ''
+feature_train_path: '/scratch/scratch1/nikita/data/oracle_reduced/finished_files/train_features/train_*'
+feature_dev_path: '/scratch/scratch1/nikita/data/oracle_reduced/finished_files/dev_features/dev_*'
+feature_test_path: '/scratch/scratch1/nikita/data/oracle_reduced/finished_files/test_features/test_*'
 
 #output paths
 log_root: '/scratch/scratch1/nikita/pg' #Root directory for all logging.
