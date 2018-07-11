@@ -245,7 +245,7 @@ def check_for_early_stopping(train_step):
 			if x:
 				val_step = int(x[0])
 			break
-	tf.logging.info(val_step)
+	#tf.logging.info(val_step)
 	patience_steps = FLAGS.early_stopping_steps
 	if patience_steps < (train_step - val_step):
 		return True

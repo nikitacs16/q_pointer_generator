@@ -320,12 +320,14 @@ def features2vector(example_features, hps, len_limit,flag):
 		start = 0
 		if len_words< len_limit:
 			end = len_words
+			len_limit = len_words
 		else:
 			end = len_limit
 	else:
 		if len_words < len_limit:
 			start = 0
 			end = len_words
+			len_limit = len_words
 		else:
 			start = len_words - len_limit
 			end = len_words
@@ -433,8 +435,8 @@ def build_features_to_vector(hps):
 		loaded_features = pickle.load(open(feature_file,'rb'))
 		feature_keys = list(loaded_features.keys())
 		for i in feature_keys:
-			document_features = features2vector(loaded_features[i]['document_features'],hps,hps.max_enc_steps,flag=True) 
-			context_features = features2vector(loaded_features[i]['context_featues'],hps,hps.max_que_steps,flag=False)
+			document_features = features2vector(loaded_features[i]['document_features'],hps,hps.max_enc_steps,True) 
+			context_features = features2vector(loaded_features[i]['context_featues'],hps,hps.max_que_steps,False)
 			feature_vector_dict[i] = {'document_features':document_features,'context_features':context_features} 
 	t1 = time.time()
 	tf.logging.info('Time to build features2vector: %i seconds', t1 - t0)

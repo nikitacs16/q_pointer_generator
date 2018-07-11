@@ -57,7 +57,9 @@ class Example(object):
 		query_words = query.split()
 		#query_words = word_features.get_tokens(query)
 		if len(query_words) > hps.max_que_steps:
-			query_words = article_words[len(query_words)- hps.max_que_steps:]
+			#tf.logging.info('Before_query: %d Hps: %d'%(len(query_words),hps.max_que_steps))
+			query_words = query_words[len(query_words)- hps.max_que_steps:]
+			#tf.logging.info('Big_query : %d'%(len(query_words)))
 			query = " ".join(q for q in query_words)
 		self.que_len = len(query_words) # store the length after truncation but before padding
 		self.que_input = [vocab.word2id(w) for w in query_words] # list of word ids; OOVs are represented by the id for UNK token
@@ -200,7 +202,7 @@ class Batch(object):
 		"""
 		# Determine the maximum length of the encoder input sequence in this batch
 		max_enc_seq_len = max([ex.enc_len for ex in example_list])
-
+		#tf.logging.info("Enc %d"%(max_enc_seq_len))
 		# Pad the encoder input sequences up to the length of the longest sequence
 		for ex in example_list:
 			ex.pad_encoder_input(max_enc_seq_len, self.pad_id)
@@ -219,6 +221,7 @@ class Batch(object):
 				self.enc_features_batch = tf.stack([ex.enc_features for ex in example_list])	
 			except:
 				w = [ex.example_id for ex in example_list]
+				tf.logging.info('tf stack document')
 				tf.logging.info(w)	
 
 		# Fill in the numpy arrays
@@ -255,7 +258,7 @@ class Batch(object):
 #	"""
 	# Determine the maximum length of the encoder input sequence in this batch
 		max_que_seq_len = max([ex.que_len for ex in example_list])
-
+		#tf.logging.info("QUe : %d"%(max_que_seq_len))
 		# Pad the encoder input sequences up to the length of the longest sequence
 		for ex in example_list:
 			ex.pad_query_input(max_que_seq_len, self.pad_id)
@@ -285,6 +288,7 @@ class Batch(object):
 				self.que_features_batch = tf.stack([ex.que_features for ex in example_list])	
 			except:
 				w = [ex.example_id for ex in example_list]
+				tf.logging.info('tf stack query')
 				tf.logging.info(w)
 					
 		

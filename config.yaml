@@ -12,7 +12,7 @@ feature_test_path: '/scratch/scratch1/nikita/data/oracle_reduced/finished_files/
 log_root: '/scratch/scratch1/nikita/pg' #Root directory for all logging.
 exp_name: 'oracle_reduced_features' #Name for experiment. Logs will be saved in a directory with this name, under log_root
 #Hyperparameters
-hidden_dim: 100 #dimension of RNN hidden states
+hidden_dim: 256 #dimension of RNN hidden states
 emb_dim: 128 #dimension of word embeddings
 batch_size: 16  #minibatch size'
 max_enc_steps: 500 #max timesteps of encoder (max source text tokens)
@@ -29,7 +29,7 @@ max_grad_norm: 2.0 #for gradient clipping
 
 #other_options
 pointer_gen: True #If True, use pointer-generator model. If False, use baseline model.
-max_to_keep: 10
+max_to_keep: 3
 early_stopping_steps: 15000
 
 #use_features
