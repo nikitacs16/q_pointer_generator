@@ -33,6 +33,10 @@ import re
 import json
 
 FLAGS = tf.app.flags.FLAGS
+tf.app.flags.DEFINE_string('gpu_device_id','0','allocate gpu to which device')
+os.environ["CUDA_VISIBLE_DEVICES"] = config['gpu_device_id']
+
+
 tf.app.flags.DEFINE_string('config_file', 'config.yaml', 'pass the config_file through command line if new expt')
 config = yaml.load(open(FLAGS.config_file,'r'))
 #print(config['train_path'])
@@ -234,21 +238,22 @@ def run_training(model, batcher, sess_context_manager, sv, summary_writer):
 					return
 
 def check_for_early_stopping(train_step):
-	tf.logging.info(train_step)
+	#tf.logging.info(train_step)
 	eval_dir = os.path.join(FLAGS.log_root, "eval") # make a subdir of the root dir for eval data
-	ckpt_file = open(eval_dir+'/checkpoint_best','r')
-	pattern_in_line = 'model_checkpoint_path:'
-	val_step = 0
-	for line in ckpt_file.readlines():
-		if pattern_in_line:
-			x = re.findall(r"\d{4,7}(?!\d)",line)
-			if x:
-				val_step = int(x[0])
-			break
-	#tf.logging.info(val_step)
-	patience_steps = FLAGS.early_stopping_steps
-	if patience_steps < (train_step - val_step):
-		return True
+	if os.path.isdir(eval_dir) and train_step > 1000:
+		ckpt_file = open(eval_dir+'/checkpoint_best','r')
+		pattern_in_line = 'model_checkpoint_path:'
+		val_step = 0
+		for line in ckpt_file.readlines():
+			if pattern_in_line:
+				x = re.findall(r"\d{4,7}(?!\d)",line)
+				if x:
+					val_step = int(x[0])
+				break
+		#tf.logging.info(val_step)
+		patience_steps = FLAGS.early_stopping_steps
+		if patience_steps < (train_step - val_step):
+			return True
 	return False
 
 def run_eval(model, batcher, vocab):
