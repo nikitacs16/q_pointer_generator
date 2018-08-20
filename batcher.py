@@ -404,6 +404,11 @@ class Batcher(object):
 
 		input_gen = self.text_generator(data.example_generator(self._data_path, self._single_pass))
 
+		for i in range(self._hps.start_epoch,self._hps.end_epoch):
+			
+
+
+		'''
 		while True:
 			try:
 				if self._hps.use_features:
@@ -429,6 +434,8 @@ class Batcher(object):
 				example = Example(article,query,abstract_sentences,self._vocab,self._hps)
 			
 			self._example_queue.put(example) # place the Example in the example queue.
+		'''
+
 
 
 	def fill_batch_queue(self):
