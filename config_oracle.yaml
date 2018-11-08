@@ -30,7 +30,7 @@ max_grad_norm: 2.0 #for gradient clipping
 #other_options
 pointer_gen: True #If True, use pointer-generator model. If False, use baseline model.
 max_to_keep: 3
-early_stopping_steps: 30000
+early_stopping_steps: 20000
 
 #use_features
 use_features: False
