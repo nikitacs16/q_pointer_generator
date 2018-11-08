@@ -43,13 +43,8 @@ config = yaml.load(open(FLAGS.config_file,'r'))
 tf.app.flags.DEFINE_string('mode', 'train', 'must be one of train/eval/decode')
 tf.app.flags.DEFINE_string('data_path',config['train_path'],'Default path to the chunked files')
 tf.app.flags.DEFINE_string('vocab_path', config['vocab_path'], 'Path expression to text vocabulary file.')
-tf.app.flags.DEFINE_string('feature_meta_path', config['feature_meta_path'], 'Path expression to feature meta data path.')
-tf.app.flags.DEFINE_string('feature_train_path', config['feature_train_path'], 'Path expression to feature for train data path.')
-tf.app.flags.DEFINE_string('feature_dev_path', config['feature_dev_path'], 'Path expression to feature for dev data path.')
-tf.app.flags.DEFINE_string('feature_test_path', config['feature_test_path'], 'Path expression to feature for test data path.')
 
 #print(FLAGS.data_path)
-feature_meta = json.load(open(config['feature_meta_path'],'r'))
 tf.app.flags.DEFINE_boolean('debug', False, "Run in tensorflow's debug mode (watches for NaN/inf values)")
 tf.app.flags.DEFINE_boolean('single_pass', False, 'For decode mode only. If True, run eval on the full dataset using a fixed checkpoint, i.e. take the current checkpoint, and use it to produce one summary for each example in the dataset, write the summaries to file and then get ROUGE scores for the whole dataset. If False (default), run concurrent decoding, i.e. repeatedly load latest checkpoint, use it to produce summaries for randomly-chosen examples and log the results to screen, indefinitely.')
 tf.app.flags.DEFINE_boolean('pointer_gen', config['pointer_gen'], 'If True, use pointer-generator model. If False, use baseline model.')
@@ -81,14 +76,6 @@ tf.app.flags.DEFINE_float('max_grad_norm', config['max_grad_norm'], 'for gradien
 tf.app.flags.DEFINE_integer('max_to_keep',config['max_to_keep'] , 'maximum models to keep')
 tf.app.flags.DEFINE_integer('early_stopping_steps', config['early_stopping_steps'], 'setting up patience parameter')
 # Pointer-generator or baseline model
-tf.app.flags.DEFINE_boolean('use_features',config['use_features'],'option to use features')
-tf.app.flags.DEFINE_boolean('in_query',config['in_query'],'cross interaction between document and query')
-tf.app.flags.DEFINE_boolean('use_stop',config['use_stop'],'check for stop words')
-tf.app.flags.DEFINE_boolean('use_ner',config['use_ner'],'check for ner' )
-tf.app.flags.DEFINE_boolean('use_pos',config['use_pos'],'check for pos')
-tf.app.flags.DEFINE_boolean('use_sentiment',config['use_sentiment'],'check for sentiment')
-tf.app.flags.DEFINE_boolean('is_aspect',config['is_aspect'],'check for presence of aspect')
-tf.app.flags.DEFINE_boolean('aspect_treat_as_one_hot',config['aspect_treat_as_one_hot'],'check for type of aspect')
 
 
 def calc_running_avg_loss(loss, running_avg_loss, summary_writer, step, decay=0.99):
@@ -358,15 +345,9 @@ def main(unused_argv):
 		if key in hparam_list: # if it's in the list
 			hps_dict[key] = val # add it to the dict
 	
-	if FLAGS.use_features:		
-		hps_dict['feature_dict'] = build_feature_dict(feature_meta,config)
 			
 	hps = namedtuple("HParams", hps_dict.keys())(**hps_dict)
-	if FLAGS.use_features:
-		print('Reached here')
-		hps_dict['feature_vector_dict'] = build_features_to_vector(hps)
-		hps = namedtuple("HParams", hps_dict.keys())(**hps_dict)
-
+	
 	# Create a batcher object that will create minibatches of data
 	batcher = Batcher(FLAGS.data_path, vocab, hps, single_pass=FLAGS.single_pass)
 

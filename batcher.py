@@ -53,6 +53,7 @@ class Example(object):
 		self.enc_len = len(article_words) # store the length after truncation but before padding
 		self.enc_input = [vocab.word2id(w) for w in article_words] # list of word ids; OOVs are represented by the id for UNK token
 		self.example_id = example_id
+		
 		# Process the query
 		query_words = query.split()
 		#query_words = word_features.get_tokens(query)
@@ -64,11 +65,7 @@ class Example(object):
 		self.que_len = len(query_words) # store the length after truncation but before padding
 		self.que_input = [vocab.word2id(w) for w in query_words] # list of word ids; OOVs are represented by the id for UNK token
 
-		if self.hps.use_features:
-
-			self.enc_features = hps.feature_vector_dict[example_id]['document_features']
-			self.que_features = hps.feature_vector_dict[example_id]['context_features']
-
+		
 
 		# Process the abstract
 		abstract = ' '.join(abstract_sentences) # string
@@ -97,16 +94,9 @@ class Example(object):
 		self.original_abstract = abstract
 		self.original_abstract_sents = abstract_sentences
 		self.original_example_id = example_id
-	def check_if_features_are_equal(self):
-		if len(self.que_features) == self.que_len and len(self.enc_features) == self.enc_len:
-			#tf.logging.info("QUe len Que F len %d\t%d"%(self.que_len,len(self.que_features)))
-			#tf.logging.info(self.que_len)
-			#tf.logging.info('******')
-			return True
-		tf.logging.info("QUe len Que F len %d\t%d"%(self.que_len,len(self.que_features)))
+	
 
-		return False
-
+	
 	def get_dec_inp_targ_seqs(self, sequence, max_len, start_id, stop_id):
 		"""Given the reference summary as a sequence of tokens, return the input sequence for the decoder, and the target sequence which we will use to calculate loss. The sequence will be truncated if it is longer than max_len. The input sequence must start with the start_id and the target sequence must end with the stop_id (but not if it's been truncated).
 
@@ -152,20 +142,7 @@ class Example(object):
 		while len(self.que_input) < max_len:
 			self.que_input.append(pad_id)
 		
-	def pad_query_feature_vector(self,max_len,feature_len):
-		diff = max_len - len(self.que_features)
-		if diff > 0:
-			diff_zeros = np.zeros((diff,feature_len))
-			self.que_features = np.concatenate([self.que_features,diff_zeros],axis=0)
-
-	def pad_enc_feature_vector(self,max_len,feature_len):
-		diff = max_len - len(self.enc_features)
-		#tf.logging.info(diff)
-		if diff > 0:
-			diff_zeros = np.zeros((diff,feature_len))
-			self.enc_features = np.concatenate([self.enc_features,diff_zeros],axis=0)
-			#tf.logging.info(diff)
-			
+				
 class Batch(object):
 	"""Class representing a minibatch of train/val/test examples for text summarization."""
 
@@ -213,17 +190,7 @@ class Batch(object):
 		self.enc_lens = np.zeros((hps.batch_size), dtype=np.int32)
 		self.enc_padding_mask = np.zeros((hps.batch_size, max_enc_seq_len), dtype=np.float32)
 
-		if hps.use_features:
-			self.enc_feature_batch = np.zeros((hps.batch_size, max_enc_seq_len, len(hps.feature_dict)))	
-			for ex in example_list:
-				ex.pad_enc_feature_vector(max_enc_seq_len, len(hps.feature_dict))
-			try:
-				self.enc_features_batch = tf.stack([ex.enc_features for ex in example_list])	
-			except:
-				w = [ex.example_id for ex in example_list]
-				tf.logging.info('tf stack document')
-				tf.logging.info(w)	
-
+		
 		# Fill in the numpy arrays
 		for i, ex in enumerate(example_list):
 			self.enc_batch[i, :] = ex.enc_input[:]
@@ -277,23 +244,6 @@ class Batch(object):
 				self.que_padding_mask[i][j] = 1
 
 
-
-		if hps.use_features:
-			self.que_feature_batch = np.zeros((hps.batch_size, max_que_seq_len, len(hps.feature_dict)))	
-			#pad 
-			for ex in example_list:
-				ex.pad_query_feature_vector(max_que_seq_len, len(hps.feature_dict))
-			#fill in numpy array
-			try:
-				self.que_features_batch = tf.stack([ex.que_features for ex in example_list])	
-			except:
-				w = [ex.example_id for ex in example_list]
-				tf.logging.info('tf stack query')
-				tf.logging.info(w)
-					
-		
-
-
 	def init_decoder_seq(self, example_list, hps):
 		"""Initializes the following:
 				self.dec_batch:
@@ -320,6 +270,7 @@ class Batch(object):
 			for j in xrange(ex.dec_len):
 				self.dec_padding_mask[i][j] = 1
 
+	
 	def store_orig_strings(self, example_list):
 		"""Store the original article and abstract strings in the Batch object"""
 		self.original_articles = [ex.original_article for ex in example_list] # list of lists
@@ -369,6 +320,7 @@ class Batcher(object):
 			self._example_q_threads[-1].daemon = True
 			self._example_q_threads[-1].start()
 		self._batch_q_threads = []
+		
 		for _ in xrange(self._num_batch_q_threads):
 			self._batch_q_threads.append(Thread(target=self.fill_batch_queue))
 			self._batch_q_threads[-1].daemon = True
@@ -404,17 +356,9 @@ class Batcher(object):
 
 		input_gen = self.text_generator(data.example_generator(self._data_path, self._single_pass))
 
-		for i in range(self._hps.start_epoch,self._hps.end_epoch):
-			
-
-
-		'''
 		while True:
 			try:
-				if self._hps.use_features:
-					(article, query, abstract, example_id) = input_gen.next() # read the next example from file. article and abstract are both strings.
-				else:
-					(article,query,abstract) = input_gen.next()	
+				(article,query,abstract) = input_gen.next()	
 			except StopIteration: # if there are no more examples:
 				tf.logging.info("The example generator for this example queue filling thread has exhausted data.")
 				if self._single_pass:
@@ -425,17 +369,10 @@ class Batcher(object):
 					raise Exception("single_pass mode is off but the example generator is out of data; error.")
 
 			abstract_sentences = [sent.strip() for sent in data.abstract2sents(abstract)] # Use the <s> and </s> tags in abstract to get a list of sentences.
-			if self._hps.use_features:
-				example = Example(article, query, abstract_sentences, self._vocab, self._hps, example_id) # Process into an Example.
-				#if not example.check_if_features_are_equal():
-				#	tf.logging.info(example_id)
-				#	continue
-			else:
-				example = Example(article,query,abstract_sentences,self._vocab,self._hps)
+			example = Example(article,query,abstract_sentences,self._vocab,self._hps)
 			
 			self._example_queue.put(example) # place the Example in the example queue.
-		'''
-
+		
 
 
 	def fill_batch_queue(self):
@@ -485,7 +422,7 @@ class Batcher(object):
 					new_t.daemon = True
 					new_t.start()
 
-
+	
 	def text_generator(self, example_generator):
 		"""Generates article and abstract text from tf.Example.
 
@@ -495,11 +432,9 @@ class Batcher(object):
 		while True:
 			e = example_generator.next() # e is a tf.Example
 			try:
-				article_text = e.features.feature['document'].bytes_list.value[0] # document text
-				abstract_text = e.features.feature['response'].bytes_list.value[0] # response text
-				query_text = e.features.feature['context'].bytes_list.value[0] # context text
-				if self._hps.use_features:
-					example_id_text = e.features.feature['example_id'].bytes_list.value[0] #example id about the movie being talked about	
+				article_text = e.features.feature['document'].bytes_list.value[0] # document text  #article
+				abstract_text = e.features.feature['response'].bytes_list.value[0] # response text #abstract
+				query_text = e.features.feature['context'].bytes_list.value[0] # context text #query
 				#print(query_text)
 			except ValueError:
 				tf.logging.error('Failed to get article or abstract from example')
@@ -507,8 +442,5 @@ class Batcher(object):
 			if len(article_text)==0: # See https://github.com/abisee/pointer-generator/issues/1
 				tf.logging.warning('Found an example with empty article text. Skipping it.')
 			else:
-				if self._hps.use_features:
-					yield (article_text, query_text, abstract_text, example_id_text)
-				else:
-					yield (article_text, query_text, abstract_text)
+				yield (article_text, query_text, abstract_text)
 
