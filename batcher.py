@@ -24,7 +24,7 @@ import time
 import numpy as np
 import tensorflow as tf
 import data
-from word_level_features import WordFeatures
+#from word_level_features import WordFeatures
 
 class Example(object):
 	"""Class representing a train/val/test example for text summarization."""

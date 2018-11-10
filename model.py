@@ -31,7 +31,7 @@ class SummarizationModel(object):
 	def __init__(self, hps, vocab):
 		self._hps = hps
 		self._vocab = vocab
-		print(hps.use_features)
+		#print(hps.use_features)
 
 	def _add_placeholders(self):
 		"""Add placeholders to the graph. These are entry points for any input data."""
@@ -59,10 +59,7 @@ class SummarizationModel(object):
 		if hps.mode=="decode" and hps.coverage:
 			self.prev_coverage = tf.placeholder(tf.float32, [hps.batch_size, None], name='prev_coverage')
 			self.prev_q_coverage = tf.placeholder(tf.float32, [hps.batch_size, None], name='prev_q_coverage')
-		if self._hps.use_features:
-			fw_len = len(hps.feature_dict.keys())
-			self._que_features = tf.placeholder(tf.float32,[hps.batch_size, None, fw_len], name='que_featues')
-			self._enc_features = tf.placeholder(tf.float32,[hps.batch_size, None, fw_len], name='enc_features')
+		
 
 	def _make_feed_dict(self, batch, just_enc=False):
 		"""Make a feed dictionary mapping parts of the batch to the appropriate placeholders.
@@ -87,11 +84,6 @@ class SummarizationModel(object):
 			feed_dict[self._dec_batch] = batch.dec_batch
 			feed_dict[self._target_batch] = batch.target_batch
 			feed_dict[self._dec_padding_mask] = batch.dec_padding_mask
-		
-		if self._hps.use_features:
-			feed_dict[self._enc_features] = batch.enc_feature_batch
-			feed_dict[self._que_features] = batch.que_feature_batch
-
 		
 		return feed_dict
 

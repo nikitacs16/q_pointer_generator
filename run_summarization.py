@@ -22,7 +22,7 @@ import os
 import tensorflow as tf
 import numpy as np
 from collections import namedtuple
-from data import Vocab, build_feature_dict, build_features_to_vector
+from data import Vocab
 from batcher import Batcher
 from model import SummarizationModel
 from decode import BeamSearchDecoder
@@ -34,11 +34,13 @@ import json
 
 FLAGS = tf.app.flags.FLAGS
 tf.app.flags.DEFINE_string('gpu_device_id','0','allocate gpu to which device')
-os.environ["CUDA_VISIBLE_DEVICES"] = config['gpu_device_id']
+#os.environ["CUDA_VISIBLE_DEVICES"] = config['gpu_device_id']
 
 
 tf.app.flags.DEFINE_string('config_file', 'config.yaml', 'pass the config_file through command line if new expt')
 config = yaml.load(open(FLAGS.config_file,'r'))
+os.environ["CUDA_VISIBLE_DEVICES"] = config['gpu_device_id']
+
 #print(config['train_path'])
 tf.app.flags.DEFINE_string('mode', 'train', 'must be one of train/eval/decode')
 tf.app.flags.DEFINE_string('data_path',config['train_path'],'Default path to the chunked files')
