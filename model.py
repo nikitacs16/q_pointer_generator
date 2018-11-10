@@ -31,8 +31,7 @@ class SummarizationModel(object):
 	def __init__(self, hps, vocab):
 		self._hps = hps
 		self._vocab = vocab
-		#print(hps.use_features)
-
+		
 	def _add_placeholders(self):
 		"""Add placeholders to the graph. These are entry points for any input data."""
 		hps = self._hps
@@ -249,12 +248,7 @@ class SummarizationModel(object):
 				emb_enc_inputs = tf.nn.embedding_lookup(embedding, self._enc_batch) # tensor with shape (batch_size, max_enc_steps, emb_size)
 				emb_que_inputs = tf.nn.embedding_lookup(embedding, self._que_batch) # tensor with shape (batch_size, max_que_steps, emb_size)
 				
-				if hps.use_features:
-					print(emb_enc_inputs.get_shape().as_list())
-					print(self._enc_features.get_shape().as_list()) 
-					emb_enc_inputs = tf.concat([emb_enc_inputs,self._enc_features], axis=2)
-					emb_que_inputs = tf.concat([emb_que_inputs,self._que_features], axis=2)
-				
+								
 				emb_dec_inputs = [tf.nn.embedding_lookup(embedding, x) for x in tf.unstack(self._dec_batch, axis=1)] # list length max_dec_steps containing shape (batch_size, emb_size)
 
 			# Add the encoder.
