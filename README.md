@@ -64,9 +64,9 @@ Please write to us in case of
 ### Evaluate as per ROUGE/BLEU mentioned in the paper
 Since installation of ROUGE via the perl package is difficult, we use the other version of ROUGE (Details in main Repo). 
 
-After the testing is complete, there will be a decode_test_* folder where * denotes the configuration details. Within this folder, there will be two folders *decoded* and *reference* respectively. 
+After the testing is complete, there will be a decode_test_* folder where * denotes the configuration details. Within this folder, there will be two folders *decoded* and *reference* respectively. Along with it a *results.txt* will be generated.
 
-You will have metrics folder in the main repository. Use the three files from that folder and run the following command
+If this doesn't work, fetch the metrics folder from [main](https://github.com/nikitacs16/Holl-E) repository. Use the three files from that folder and run the following command
 
 ```
 python evauluate.py path_to_decoded path_to_reference
