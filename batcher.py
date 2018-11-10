@@ -432,9 +432,9 @@ class Batcher(object):
 		while True:
 			e = example_generator.next() # e is a tf.Example
 			try:
-				article_text = e.features.feature['document'].bytes_list.value[0] # document text  #article
-				abstract_text = e.features.feature['response'].bytes_list.value[0] # response text #abstract
-				query_text = e.features.feature['context'].bytes_list.value[0] # context text #query
+				article_text = e.features.feature['article'].bytes_list.value[0] # document text  #article
+				abstract_text = e.features.feature['abstract'].bytes_list.value[0] # response text #abstract
+				query_text = e.features.feature['query'].bytes_list.value[0] # context text #query
 				#print(query_text)
 			except ValueError:
 				tf.logging.error('Failed to get article or abstract from example')

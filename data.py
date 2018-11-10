@@ -26,13 +26,13 @@ import time
 import pickle
 import tensorflow as tf
 # <s> and </s> are used in the data files to segment the abstracts into sentences. They don't receive vocab ids.
-SENTENCE_START = 'SOOS'
-SENTENCE_END = 'EOOS'
+SENTENCE_START = '<s>'
+SENTENCE_END = '</s>'
 
-PAD_TOKEN = 'PAAD' # This has a vocab id, which is used to pad the encoder input, decoder input and target sequence
-UNKNOWN_TOKEN = 'UNK' # This has a vocab id, which is used to represent out-of-vocabulary words
-START_DECODING = 'STAAART' # This has a vocab id, which is used at the start of every decoder input sequence
-STOP_DECODING = 'STOPPP' # This has a vocab id, which is used at the end of untruncated target sequences
+PAD_TOKEN = '[PAD]' # This has a vocab id, which is used to pad the encoder input, decoder input and target sequence
+UNKNOWN_TOKEN = '[UNK]' # This has a vocab id, which is used to represent out-of-vocabulary words
+START_DECODING = '[START]' # This has a vocab id, which is used at the start of every decoder input sequence
+STOP_DECODING = '[STOP]' # This has a vocab id, which is used at the end of untruncated target sequences
 
 # Note: none of <s>, </s>, [PAD], [UNK], [START], [STOP] should appear in the vocab file.
 
