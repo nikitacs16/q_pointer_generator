@@ -1,6 +1,7 @@
 ## Baseline (GTTP) for Towards Exploiting Background Knowledge for Building Conversation Systems (EMNLP 2018)
-This code is based on the [Pointer Generator](https://github.com/abisee/pointer-generator) code. It uses Tensorflow 1.0
-We add the query decoder which was not present in the original documentation. Please refer to the Appendix for additional details.
+This code is modified [Pointer Generator](https://github.com/abisee/pointer-generator) code. It uses Tensorflow 1.0
+
+We add the query decoder which was not present in the original architecture. Please refer to the Appendix for additional details.
 
 ## How to run (Instructions as per the original Repository)
 
@@ -61,7 +62,9 @@ In order to test, you can follow the same commands as the original repository.
 Please write to us in case of 
 
 ### Evaluate as per ROUGE/BLEU mentioned in the paper
-Since installation of ROUGE via the perl package is difficult. We use the other version of ROUGE (Details in main Repo). After the testing is complete, there will be a decode_test_* folder where * denotes the configuration details. Within this folder, there will be two folders *decoded* and *reference* respectively. 
+Since installation of ROUGE via the perl package is difficult, we use the other version of ROUGE (Details in main Repo). 
+
+After the testing is complete, there will be a decode_test_* folder where * denotes the configuration details. Within this folder, there will be two folders *decoded* and *reference* respectively. 
 
 You will have metrics folder in the main repository. Use the three files from that folder and run the following command
 
